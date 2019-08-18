@@ -36,6 +36,13 @@ public class ShipListActivity extends AppCompatActivity {
     String type=" ";
 
     @Override
+    protected void onResume() {
+
+
+        super.onResume();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ship_list);
@@ -51,6 +58,11 @@ public class ShipListActivity extends AppCompatActivity {
 
         progressDialog.setMessage("Loading..");
         progressDialog.show();
+
+
+        if (progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
 
         try {
             type=getIntent().getExtras().getString("type");

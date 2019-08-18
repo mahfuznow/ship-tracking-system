@@ -3,6 +3,8 @@ package just.cse.mahfuz.shiptrackingsystem.Adapter;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import just.cse.mahfuz.shiptrackingsystem.MapsActivity;
@@ -38,9 +41,11 @@ public class ShipListRecyclerAdapter extends RecyclerView.Adapter<ShipListRecycl
 
     String type;
 
+
     public ShipListRecyclerAdapter(Context c, List<Users> usrs, String type) {
         context = c;
         usersModel = usrs;
+        this.type=type;
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
@@ -102,9 +107,31 @@ public class ShipListRecyclerAdapter extends RecyclerView.Adapter<ShipListRecycl
             myViewHolder.constraintLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    progressDialog.setMessage("Loading...");
+                    progressDialog.show();
+                    progressDialog.setCancelable(true);
+
                     Intent intent= new Intent(context, MapsActivity.class);
+
+                    //converting bitmap to bytearray
+                    Bitmap bitmap=((BitmapDrawable)myViewHolder.image.getDrawable()).getBitmap();
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                    byte[] b = baos.toByteArray();
+
+
+                    intent.putExtra("image",b);
+
                     intent.putExtra("shipID",myViewHolder.shipID.getText().toString());
+                    intent.putExtra("shipName",myViewHolder.shipName.getText().toString());
+                    //intent.putExtra("country",myViewHolder.shipID.getText().toString());
+                    intent.putExtra("ownerName",myViewHolder.ownerName.getText().toString());
+                    intent.putExtra("ownerEmail",myViewHolder.ownerEmail.getText().toString());
+                    intent.putExtra("ownerPhone",myViewHolder.ownerPhone.getText().toString());
+
                     context.startActivity(intent);
+
+
                 }
             });
 

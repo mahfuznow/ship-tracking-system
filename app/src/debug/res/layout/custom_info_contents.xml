@@ -2,34 +2,74 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:background="@drawable/gradient_background"
+    android:gravity="center"
     android:layoutDirection="locale"
     android:orientation="vertical"
+    android:padding="@dimen/_10sdp">
 
-    android:gravity="center"
-    >
-
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/image"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/ship_icon"
-        />
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:textColor="#ff000000"
-        android:textStyle="bold"
-        android:text="Ship Name"
-        android:gravity="center"
-        />
+        android:src="@drawable/ship_icon" />
 
-    <TextView
-        android:id="@+id/snippet"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#ff7f7f7f"
-        android:text="Ship Details"
-        android:gravity="center"
-        />
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/shipName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ship"
+            android:drawablePadding="@dimen/_8sdp"
+            android:fontFamily="@font/reem"
+            android:paddingTop="@dimen/nav_header_vertical_spacing"
+            android:text="Ship Name"
+            android:textAllCaps="true"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="#fff"
+            android:textSize="@dimen/_11ssp"
+
+            />
+
+        <TextView
+            android:id="@+id/ownerName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/person"
+            android:drawablePadding="@dimen/_8sdp"
+            android:fontFamily="@font/reem"
+            android:text="Owner Name"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="#fff"
+            android:textSize="@dimen/_11ssp"
+
+            />
+
+        <TextView
+            android:id="@+id/ownerEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/email"
+            android:drawablePadding="@dimen/_8sdp"
+            android:fontFamily="@font/reem"
+            android:text="contact@email.com"
+            android:textColor="#fff"
+            android:textSize="@dimen/_11ssp" />
+
+        <TextView
+            android:id="@+id/ownerPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/call"
+            android:drawablePadding="@dimen/_8sdp"
+            android:fontFamily="@font/reem"
+            android:text="+880170000001"
+            android:textColor="#fff"
+            android:textSize="@dimen/_11ssp" />
+    </LinearLayout>
 </LinearLayout>

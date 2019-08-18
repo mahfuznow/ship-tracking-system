@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.Bundle;
 import androidx.core.content.ContextCompat;
@@ -32,6 +34,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.net.PlacesClient;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback  {
 
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
@@ -43,6 +47,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     FusedLocationProviderClient mFusedLocationProviderClient;
     int DEFAULT_ZOOM=10;
     //private GeoDataClient mGeoDataClient;
+
+    Bitmap bitmap;
+    String sImage, sShipName, sShipID, sCountry, sOwnerName, sOwnerEmail, sOwnerPhone;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +65,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         getLocationPermission();
+
+
+
+        try {
+            byte[] b = getIntent().getExtras().getByteArray("image");
+            bitmap = BitmapFactory.decodeByteArray(b, 0, b.length);
+
+            sShipID=getIntent().getExtras().getString("shipID");
+            sShipName=getIntent().getExtras().getString("shipName");
+            sOwnerName=getIntent().getExtras().getString("ownerName");
+            sOwnerEmail=getIntent().getExtras().getString("ownerEmail");
+            sOwnerPhone=getIntent().getExtras().getString("ownerPhone");
+        }
+        catch (Exception e) {
+
+        }
 
 
     }
@@ -93,11 +117,39 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 // Inflate the layouts for the info window, title and snippet.
                 View infoWindow = getLayoutInflater().inflate(R.layout.custom_info_contents, null);
 
-                TextView title = ((TextView) infoWindow.findViewById(R.id.title));
-                title.setText("Ship Name");
+                try {
+                    CircleImageView image= infoWindow.findViewById(R.id.image);
+                    image.setImageBitmap(bitmap);
 
-                TextView snippet = ((TextView) infoWindow.findViewById(R.id.snippet));
-                snippet.setText("Ship Details");
+                    TextView shipName = ((TextView) infoWindow.findViewById(R.id.shipName));
+                    shipName.setText(sShipName);
+
+                    TextView ownerName = ((TextView) infoWindow.findViewById(R.id.ownerName));
+                    ownerName.setText(sOwnerName);
+
+                    TextView ownerEmail = ((TextView) infoWindow.findViewById(R.id.ownerEmail));
+                    ownerEmail.setText(sOwnerEmail);
+
+                    TextView ownerPhone = ((TextView) infoWindow.findViewById(R.id.ownerPhone));
+                    ownerPhone.setText(sOwnerPhone);
+                }
+                catch (Exception e) {
+                    CircleImageView image= infoWindow.findViewById(R.id.image);
+                    image.setImageResource(R.drawable.ship_icon);
+
+                    TextView shipName = ((TextView) infoWindow.findViewById(R.id.shipName));
+                    shipName.setText("ShipName");
+
+                    TextView ownerName = ((TextView) infoWindow.findViewById(R.id.ownerName));
+                    ownerName.setText("OwnerName");
+
+                    TextView ownerEmail = ((TextView) infoWindow.findViewById(R.id.ownerEmail));
+                    ownerEmail.setText("sOwnerEmail");
+
+                    TextView ownerPhone = ((TextView) infoWindow.findViewById(R.id.ownerPhone));
+                    ownerPhone.setText("OwnerPhone");
+                }
+
 
                 return infoWindow;
             }
@@ -115,16 +167,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mDefaultLocation,DEFAULT_ZOOM));
 
 
-
-        //mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
-
-                Toast.makeText(MapsActivity.this,"kjkjkjkg",Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });
 
 
         mMap.getUiSettings().setMapToolbarEnabled(true);
