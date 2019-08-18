@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
+    android:orientation="vertical"
+    tools:context=".ProfileActivity"
+
+    >
+
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/edit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_50sdp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="@dimen/_50sdp"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+
+            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/image"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_100sdp"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/person_lg"
+                app:civ_border_color="#00000000"
+                app:civ_border_width="@dimen/_2sdp" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/half_semi_round"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:fontFamily="@font/reem"
+                android:gravity="center"
+                android:padding="2dp"
+                android:text="Ship name"
+                android:textColor="#fff" />
+
+            <TextView
+                android:id="@+id/shipName"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30sdp"
+                android:background="@drawable/half_lower_semi_round"
+                android:drawablePadding="@dimen/_10sdp"
+                android:fontFamily="@font/reem"
+                android:gravity="center"
+                android:padding="@dimen/_5sdp"
+                android:textColor="#000"
+                android:textColorHint="@color/gray"
+                android:textSize="@dimen/_16ssp" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/half_semi_round"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:fontFamily="@font/reem"
+                android:gravity="center"
+                android:padding="2dp"
+                android:text="Ship ID"
+                android:textColor="#fff" />
+
+            <TextView
+                android:id="@+id/shipID"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30sdp"
+                android:background="@drawable/half_lower_semi_round"
+                android:drawablePadding="@dimen/_10sdp"
+                android:fontFamily="@font/reem"
+                android:gravity="center"
+                android:padding="@dimen/_5sdp"
+                android:textColor="#000"
+                android:textColorHint="@color/gray"
+                android:textSize="@dimen/_16ssp" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/half_semi_round"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:fontFamily="@font/reem"
+                android:gravity="center"
+                android:padding="2dp"
+                android:text="Country of origin"
+                android:textColor="#fff" />
+
+            <TextView
+                android:id="@+id/country"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30sdp"
+                android:background="@drawable/half_lower_semi_round"
+                android:drawablePadding="@dimen/_10sdp"
+                android:fontFamily="@font/reem"
+                android:gravity="center"
+                android:padding="@dimen/_5sdp"
+                android:textColor="#000"
+                android:textColorHint="@color/gray"
+                android:textSize="@dimen/_16ssp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/half_semi_round"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:fontFamily="@font/reem"
+                android:gravity="center"
+                android:padding="2dp"
+                android:text="Owner Name"
+                android:textColor="#fff" />
+
+            <TextView
+                android:id="@+id/ownerName"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30sdp"
+                android:background="@drawable/half_lower_semi_round"
+                android:drawablePadding="@dimen/_10sdp"
+                android:fontFamily="@font/reem"
+                android:gravity="center"
+                android:padding="@dimen/_5sdp"
+                android:textColor="#000"
+                android:textColorHint="@color/gray"
+                android:textSize="@dimen/_16ssp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/half_semi_round"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:fontFamily="@font/reem"
+                android:gravity="center"
+                android:padding="2dp"
+                android:text="Owner Email"
+                android:textColor="#fff" />
+
+            <TextView
+                android:id="@+id/ownerEmail"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30sdp"
+                android:background="@drawable/half_lower_semi_round"
+                android:drawablePadding="@dimen/_10sdp"
+                android:fontFamily="@font/reem"
+                android:gravity="center"
+                android:padding="@dimen/_5sdp"
+                android:textColor="#000"
+                android:textColorHint="@color/gray"
+                android:textSize="@dimen/_16ssp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/half_semi_round"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:fontFamily="@font/reem"
+                android:gravity="center"
+                android:padding="2dp"
+                android:text="Owner Phone"
+                android:textColor="#fff" />
+
+            <TextView
+                android:id="@+id/ownerPhone"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30sdp"
+                android:background="@drawable/half_lower_semi_round"
+                android:drawablePadding="@dimen/_10sdp"
+                android:fontFamily="@font/reem"
+                android:gravity="center"
+                android:padding="@dimen/_5sdp"
+                android:textColor="#000"
+                android:textColorHint="@color/gray"
+                android:textSize="@dimen/_16ssp" />
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_60sdp">
+
+            </View>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/edit"
+        android:layout_width="@dimen/_45sdp"
+        android:layout_height="@dimen/_45sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:background="@drawable/round_white"
+        android:backgroundTint="@color/yellow"
+        android:drawablePadding="@dimen/_10sdp"
+        android:gravity="center"
+        android:padding="@dimen/_5sdp"
+        android:textColor="#ffff"
+        android:textColorHint="@color/colorPrimary"
+        android:textSize="@dimen/_18ssp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/edit" />
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

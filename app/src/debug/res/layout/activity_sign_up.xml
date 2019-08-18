@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
+    android:orientation="vertical"
+    tools:context=".SignUpActivity"
+
+    >
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_margin="@dimen/_5sdp"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:orientation="horizontal"
+        android:weightSum="13"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@drawable/arrow_back" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="@dimen/_5sdp"
+            android:layout_weight="11"
+            android:background="#00ffffff"
+            android:fontFamily="@font/reem"
+            android:gravity="center_vertical"
+            android:text=" Sign Up"
+            android:textColor="#fff"
+            android:textSize="@dimen/_16ssp" />
+
+        <Button
+            android:id="@+id/dot_menu"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_weight="1"
+
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        >
+
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_50sdp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="@dimen/_50sdp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        >
+
+
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/image"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_100sdp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/person_lg"
+            app:civ_border_color="#00000000"
+            app:civ_border_width="@dimen/_2sdp" />
+
+
+        <Button
+            android:id="@+id/chooseImage"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:background="@drawable/outereround"
+            android:fontFamily="@font/reem"
+            android:paddingLeft="@dimen/_10sdp"
+            android:paddingRight="@dimen/_10sdp"
+            android:text="Choose a Photo"
+            android:textAllCaps="false"
+            android:textColor="#fff"
+            android:textSize="@dimen/_14ssp" />
+
+        <EditText
+            android:id="@+id/shipName"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:background="@drawable/outereround"
+            android:drawablePadding="@dimen/_10sdp"
+            android:fontFamily="@font/reem"
+            android:gravity="center"
+            android:hint="Ship name"
+            android:inputType="textNoSuggestions"
+            android:padding="@dimen/_5sdp"
+            android:textColor="#ffff"
+            android:textColorHint="@color/gray"
+            android:textSize="@dimen/_16ssp" />
+
+
+        <EditText
+            android:id="@+id/shipID"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:background="@drawable/outereround"
+            android:drawablePadding="@dimen/_10sdp"
+            android:fontFamily="@font/reem"
+            android:gravity="center"
+            android:hint="Ship Identification No."
+            android:inputType="number"
+            android:padding="@dimen/_5sdp"
+            android:textColor="#ffff"
+            android:textColorHint="@color/gray"
+            android:textSize="@dimen/_16ssp" />
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:background="@drawable/outereround"
+            android:drawablePadding="@dimen/_10sdp"
+            android:fontFamily="@font/reem"
+            android:gravity="center"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:padding="@dimen/_5sdp"
+            android:textColor="#ffff"
+            android:textColorHint="@color/gray"
+            android:textSize="@dimen/_16ssp" />
+
+        <TextView
+            android:id="@+id/country"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:background="@drawable/outereround"
+            android:drawablePadding="@dimen/_10sdp"
+            android:fontFamily="@font/reem"
+            android:gravity="center"
+            android:hint="Country of Origin"
+            android:inputType="textNoSuggestions"
+            android:padding="@dimen/_5sdp"
+            android:textColor="#ffff"
+            android:textColorHint="@color/gray"
+            android:textSize="@dimen/_15ssp" />
+
+        <EditText
+            android:id="@+id/ownerName"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:background="@drawable/outereround"
+            android:drawablePadding="@dimen/_10sdp"
+            android:fontFamily="@font/reem"
+            android:gravity="center"
+            android:hint="Owner name"
+            android:inputType="textNoSuggestions"
+            android:padding="@dimen/_5sdp"
+            android:textColor="#ffff"
+            android:textColorHint="@color/gray"
+            android:textSize="@dimen/_16ssp" />
+        <EditText
+            android:id="@+id/ownerEmail"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:background="@drawable/outereround"
+            android:drawablePadding="@dimen/_10sdp"
+            android:fontFamily="@font/reem"
+            android:gravity="center"
+            android:hint="Owner Email"
+            android:inputType="textNoSuggestions"
+            android:padding="@dimen/_5sdp"
+            android:textColor="#ffff"
+            android:textColorHint="@color/gray"
+            android:textSize="@dimen/_16ssp" />
+        <EditText
+            android:id="@+id/ownerPhone"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:background="@drawable/outereround"
+            android:drawablePadding="@dimen/_10sdp"
+            android:fontFamily="@font/reem"
+            android:gravity="center"
+            android:hint="Owner phone no."
+            android:inputType="number"
+            android:padding="@dimen/_5sdp"
+            android:textColor="#ffff"
+            android:textColorHint="@color/gray"
+            android:textSize="@dimen/_16ssp" />
+
+
+        <LinearLayout
+            android:id="@+id/signUp"
+            android:layout_width="@dimen/_45sdp"
+            android:layout_height="@dimen/_45sdp"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:background="@drawable/round_white"
+            android:backgroundTint="@color/yellow"
+            android:drawablePadding="@dimen/_10sdp"
+            android:gravity="center"
+            android:padding="@dimen/_5sdp"
+            android:textColor="#ffff"
+            android:textColorHint="@color/colorPrimary"
+            android:textSize="@dimen/_18ssp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/arrow_forward" />
+
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_30sdp">
+
+        </View>
+
+
+    </LinearLayout>
+
+    </ScrollView>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

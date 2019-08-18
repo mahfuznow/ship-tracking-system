@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/semi_round"
+    android:orientation="vertical"
+    android:padding="@dimen/_20sdp"
+    >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Resize Your Image"
+        android:textSize="@dimen/_18ssp"
+        android:fontFamily="@font/reem"
+        android:gravity="center"
+        />
+    <com.fenchtose.nocropper.CropperView
+
+        android:background="#F5F4F4"
+        android:id="@+id/cropper_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:nocropper__grid_opacity="1"
+        app:nocropper__grid_thickness="1dp"
+        app:nocropper__grid_color="@color/colorAccent"
+        app:nocropper__padding_color="#D6D6D6"
+        app:nocropper__fit_to_center="false"
+        />
+
+    <Button
+        android:id="@+id/select"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:padding="@dimen/_5sdp"
+        android:layout_gravity="center"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/outereround"
+        android:text="Select"
+        android:textAllCaps="false"
+        android:textSize="@dimen/_18ssp"
+        android:fontFamily="@font/reem"
+        android:gravity="center"
+        />
+</LinearLayout>

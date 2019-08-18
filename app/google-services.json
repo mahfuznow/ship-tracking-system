@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "633050445353",
+    "firebase_url": "https://shiptrackingsystem.firebaseio.com",
+    "project_id": "shiptrackingsystem",
+    "storage_bucket": "shiptrackingsystem.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:633050445353:android:ddd9847dd728b60e",
+        "android_client_info": {
+          "package_name": "just.cse.mahfuz.shiptrackingsystem"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "633050445353-53c18vhjrb8kskr8f1mtkj6m6l0dtja7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "just.cse.mahfuz.shiptrackingsystem",
+            "certificate_hash": "a35059468d8b876392b6605282f99a894a38cd21"
+          }
+        },
+        {
+          "client_id": "633050445353-me5ogi7mvg98ij989vkq37oi95kjffp7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPeIAY34Fk2yttZz4hC5-7e0iBEE6qWuM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "633050445353-me5ogi7mvg98ij989vkq37oi95kjffp7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
