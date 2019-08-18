@@ -11,6 +11,52 @@
 
     >
 
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_margin="@dimen/_5sdp"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:orientation="horizontal"
+        android:weightSum="13"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@drawable/arrow_back" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="@dimen/_5sdp"
+            android:layout_weight="11"
+            android:background="#00ffffff"
+            android:fontFamily="@font/reem"
+            android:gravity="center_vertical"
+            android:text=" Edit Profile"
+            android:textColor="#fff"
+            android:textSize="@dimen/_16ssp" />
+
+        <Button
+            android:id="@+id/dot_menu"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_weight="1"
+
+            android:visibility="gone" />
+
+    </LinearLayout>
 
     <ScrollView
         android:id="@+id/scrollView2"
