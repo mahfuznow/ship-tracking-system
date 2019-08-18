@@ -8,38 +8,39 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 
-import javax.annotation.Nullable;
-
 import just.cse.mahfuz.shiptrackingsystem.Adapter.ShipListRecyclerAdapter;
 import just.cse.mahfuz.shiptrackingsystem.Model.Users;
 
-public class ContactsActivity extends AppCompatActivity {
+public class ShipListActivity extends AppCompatActivity {
 
-    Context context = ContactsActivity.this;
+    Context context = ShipListActivity.this;
+    TextView title;
     RecyclerView recyclerView;
     FirebaseFirestore firebaseFirestore;
     ShipListRecyclerAdapter shipListRecyclerAdapter;
 
     ProgressDialog progressDialog;
 
+    String type=" ";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_contacts);
+        setContentView(R.layout.activity_ship_list);
 
+        title=findViewById(R.id.title);
         recyclerView = findViewById(R.id.recyclerView);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
@@ -51,6 +52,17 @@ public class ContactsActivity extends AppCompatActivity {
         progressDialog.setMessage("Loading..");
         progressDialog.show();
 
+        try {
+            type=getIntent().getExtras().getString("type");
+        }
+        catch (Exception e) {
+            type="contacts";
+        }
+
+        if ("track".equals(type)) {
+            title.setText(" Choose a Ship to track");
+        }
+
 
         Query query = firebaseFirestore.collection("users").orderBy("sShipID", Query.Direction.ASCENDING);
 
@@ -61,12 +73,12 @@ public class ContactsActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         try {
                             List<Users> userModel = task.getResult().toObjects(Users.class);
-                            shipListRecyclerAdapter = new ShipListRecyclerAdapter(context, userModel, "contacts");
+                            shipListRecyclerAdapter = new ShipListRecyclerAdapter(context, userModel,type);
                             recyclerView.setAdapter(shipListRecyclerAdapter);
                             progressDialog.dismiss();
                         }
                         catch (Exception e) {
-                            Toast.makeText(context,"An Error Occured",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context,"An Error Occurred",Toast.LENGTH_SHORT).show();
                             progressDialog.dismiss();
                         }
 
@@ -74,7 +86,7 @@ public class ContactsActivity extends AppCompatActivity {
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(context,"An Error Occured",Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,"An Error Occurred",Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
             }
         });

@@ -1,27 +1,30 @@
 package just.cse.mahfuz.shiptrackingsystem.Adapter;
 
-        import android.app.ProgressDialog;
-        import android.content.Context;
-        import android.content.Intent;
-        import android.net.Uri;
-        import android.view.LayoutInflater;
-        import android.view.View;
-        import android.view.ViewGroup;
-        import android.widget.Button;
-        import android.widget.ImageView;
-        import android.widget.TextView;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-        import androidx.annotation.NonNull;
-        import androidx.recyclerview.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.RecyclerView;
 
-        import com.bumptech.glide.Glide;
-        import com.google.firebase.auth.FirebaseAuth;
-        import com.google.firebase.firestore.FirebaseFirestore;
+import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-        import java.util.List;
+import java.util.List;
 
-        import just.cse.mahfuz.shiptrackingsystem.Model.Users;
-        import just.cse.mahfuz.shiptrackingsystem.R;
+import just.cse.mahfuz.shiptrackingsystem.MapsActivity;
+import just.cse.mahfuz.shiptrackingsystem.Model.Users;
+import just.cse.mahfuz.shiptrackingsystem.R;
+import just.cse.mahfuz.shiptrackingsystem.ShipListActivity;
 
 public class ShipListRecyclerAdapter extends RecyclerView.Adapter<ShipListRecyclerAdapter.myViewHolder> {
     Context context;
@@ -50,7 +53,7 @@ public class ShipListRecyclerAdapter extends RecyclerView.Adapter<ShipListRecycl
     @Override
     public ShipListRecyclerAdapter.myViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-        View view = inflater.inflate(R.layout.contact_row, viewGroup, false);
+        View view = inflater.inflate(R.layout.ship_row, viewGroup, false);
         return new myViewHolder(view);
     }
 
@@ -67,7 +70,7 @@ public class ShipListRecyclerAdapter extends RecyclerView.Adapter<ShipListRecycl
         sOwnerPhone = usersModel.get(i).getsOwnerPhone();
 
 
-        if (!"".equals(sImage) && sImage!=null) {
+        if (!"".equals(sImage) && sImage != null) {
             Glide.with(context)
                     .load(sImage)
                     //.override(80, 80)
@@ -81,16 +84,33 @@ public class ShipListRecyclerAdapter extends RecyclerView.Adapter<ShipListRecycl
         myViewHolder.ownerEmail.setText(sOwnerEmail);
         myViewHolder.ownerPhone.setText(sOwnerPhone);
 
+        if ("contacts".equals(type)) {
+            myViewHolder.call.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(Intent.ACTION_DIAL);
+                    String p = "tel:+88" + myViewHolder.ownerPhone.getText().toString().trim();
+                    i.setData(Uri.parse(p));
+                    context.startActivity(i);
+                }
+            });
+        }
+        else if ("track".equals(type)) {
 
-        myViewHolder.call.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(Intent.ACTION_DIAL);
-                String p = "tel:+88"+myViewHolder.ownerPhone.getText().toString().trim();
-                i.setData(Uri.parse(p));
-                context.startActivity(i);
-            }
-        });
+            myViewHolder.call.setVisibility(View.INVISIBLE);
+
+            myViewHolder.constraintLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent= new Intent(context, MapsActivity.class);
+                    intent.putExtra("shipID",myViewHolder.shipID.getText().toString());
+                    context.startActivity(intent);
+                }
+            });
+
+        }
+
+
     }
 
     @Override
@@ -101,6 +121,7 @@ public class ShipListRecyclerAdapter extends RecyclerView.Adapter<ShipListRecycl
 
 
     class myViewHolder extends RecyclerView.ViewHolder {
+        ConstraintLayout constraintLayout;
         ImageView image;
         TextView shipID, shipName, ownerName, ownerEmail, ownerPhone;
         Button call;
@@ -108,6 +129,8 @@ public class ShipListRecyclerAdapter extends RecyclerView.Adapter<ShipListRecycl
 
         public myViewHolder(@NonNull View itemView) {
             super(itemView);
+
+            constraintLayout=itemView.findViewById(R.id.constraintLayout);
             image = itemView.findViewById(R.id.image);
             shipID = itemView.findViewById(R.id.shipID);
             shipName = itemView.findViewById(R.id.shipName);
@@ -116,7 +139,6 @@ public class ShipListRecyclerAdapter extends RecyclerView.Adapter<ShipListRecycl
             ownerPhone = itemView.findViewById(R.id.ownerPhone);
 
             call = itemView.findViewById(R.id.call);
-
 
 
         }

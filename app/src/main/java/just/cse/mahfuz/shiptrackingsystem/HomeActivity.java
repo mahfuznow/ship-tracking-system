@@ -105,9 +105,10 @@ public class HomeActivity extends AppCompatActivity
                 progressDialog.show();
                 progressDialog.setCancelable(true);
 
-                progressDialog.dismiss();
-                Intent intent = new Intent(context, MapsActivity.class);
+                Intent intent = new Intent(context, ShipListActivity.class);
+                intent.putExtra("type","track");
                 startActivity(intent);
+                progressDialog.dismiss();
             }
         });
         profile.setOnClickListener(new View.OnClickListener() {
@@ -117,16 +118,23 @@ public class HomeActivity extends AppCompatActivity
                 progressDialog.show();
                 progressDialog.setCancelable(true);
 
-                progressDialog.dismiss();
+
                 Intent intent = new Intent(context, ProfileActivity.class);
                 startActivity(intent);
+                progressDialog.dismiss();
             }
         });
         contacts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, ContactsActivity.class);
+                progressDialog.setMessage("Loading...");
+                progressDialog.show();
+                progressDialog.setCancelable(true);
+
+                Intent intent = new Intent(context, ShipListActivity.class);
+                intent.putExtra("type","contacts");
                 startActivity(intent);
+                progressDialog.dismiss();
             }
         });
 
@@ -241,14 +249,35 @@ public class HomeActivity extends AppCompatActivity
 
 
         } else if (id == R.id.nav_track) {
+            progressDialog.setMessage("Loading...");
+            progressDialog.show();
+            progressDialog.setCancelable(true);
 
+            Intent intent = new Intent(context, ShipListActivity.class);
+            intent.putExtra("type","track");
+            startActivity(intent);
+            progressDialog.dismiss();
 
         } else if (id == R.id.nav_contacts) {
+            progressDialog.setMessage("Loading...");
+            progressDialog.show();
+            progressDialog.setCancelable(true);
 
+            Intent intent = new Intent(context, ShipListActivity.class);
+            intent.putExtra("type","contacts");
+            startActivity(intent);
+            progressDialog.dismiss();
 
         }
         else if (id == R.id.nav_profile) {
+            progressDialog.setMessage("Loading...");
+            progressDialog.show();
+            progressDialog.setCancelable(true);
 
+
+            Intent intent = new Intent(context, ProfileActivity.class);
+            startActivity(intent);
+            progressDialog.dismiss();
 
         }
         else if (id == R.id.nav_journey) {
