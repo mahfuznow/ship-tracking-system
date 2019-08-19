@@ -36,10 +36,9 @@ public class ShipListActivity extends AppCompatActivity {
     String type=" ";
 
     @Override
-    protected void onResume() {
-
-
+    public void onResume() {
         super.onResume();
+        progressDialog.dismiss();
     }
 
     @Override
@@ -60,9 +59,6 @@ public class ShipListActivity extends AppCompatActivity {
         progressDialog.show();
 
 
-        if (progressDialog.isShowing()) {
-            progressDialog.dismiss();
-        }
 
         try {
             type=getIntent().getExtras().getString("type");
