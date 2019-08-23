@@ -1,13 +1,19 @@
 package just.cse.mahfuz.shiptrackingsystem;
 
 import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.media.AudioAttributes;
+import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import com.bumptech.glide.Glide;
@@ -17,6 +23,8 @@ import com.google.android.material.navigation.NavigationView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 
 import android.view.MenuItem;
@@ -43,10 +51,12 @@ public class HomeActivity extends AppCompatActivity
     Context context = HomeActivity.this;
 
     NavigationView navigationView;
-    ImageView image;
+    ImageView image,facebook,twitter,googlePlus,youtube;
     TextView shipName, ownerName, ownerEmail, ownerPhone;
     String sImage,sShipName,sShipID,sPassword,sCountry, sOwnerName, sOwnerEmail, sOwnerPhone;
 
+    private boolean mLocationPermissionGranted;
+    private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
 
     Button track,contacts,profile,journey;
     ProgressDialog progressDialog;
@@ -77,6 +87,7 @@ public class HomeActivity extends AppCompatActivity
 
         track=findViewById(R.id.track);
 
+        createNotificationChannel();
 
         //nav Drawer
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -85,6 +96,39 @@ public class HomeActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        facebook= drawer.findViewById(R.id.facebook);
+        twitter= drawer.findViewById(R.id.twitter);
+        googlePlus= drawer.findViewById(R.id.google_plus);
+        youtube= drawer.findViewById(R.id.youtube);
+
+        facebook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openLinkInBrowser("www.facebook.com");
+            }
+        });
+        twitter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openLinkInBrowser("www.twitter.com");
+            }
+        });
+        googlePlus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openLinkInBrowser("plus.google.com");
+            }
+        });
+        youtube.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openLinkInBrowser("www.facebook.com");
+            }
+        });
+
+
+
+        //nav header
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -97,6 +141,7 @@ public class HomeActivity extends AppCompatActivity
         ownerPhone = hView.findViewById(R.id.ownerPhone);
 
         loadContents();
+        startTracking();
 
         track.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,6 +186,38 @@ public class HomeActivity extends AppCompatActivity
 
     }
 
+    public  void  createNotificationChannel() {
+        Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+            NotificationChannel mChannel = new NotificationChannel("AIS", "A-AIS", NotificationManager.IMPORTANCE_DEFAULT);
+
+            AudioAttributes attributes = new AudioAttributes.Builder()
+                    .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+                    .build();
+
+            // Configure the notification channel.
+            mChannel.enableLights(true);
+            mChannel.enableVibration(true);
+            mChannel.setSound(alarmSound, attributes); // This is IMPORTANT
+
+            NotificationManager mNotificationManager = getSystemService(NotificationManager.class);
+
+            if (mNotificationManager != null) {
+                mNotificationManager.createNotificationChannel(mChannel);
+            }
+
+
+        }
+    }
+
+    public void openLinkInBrowser(String url) {
+        if (!url.startsWith("http://") && !url.startsWith("https://")) {
+            url = "http://" + url;
+        }
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        startActivity(browserIntent);
+    }
 
     public void loadContents() {
         progressDialog.setMessage("Loading...");
@@ -197,6 +274,43 @@ public class HomeActivity extends AppCompatActivity
 
     }
 
+    private void startTracking() {
+        progressDialog.setMessage("Initializing Tracking...");
+        progressDialog.show();
+        progressDialog.setCancelable(true);
+        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            mLocationPermissionGranted = true;
+            startTrackerService();
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[]
+            grantResults) {
+//If the permission has been granted...//
+        if (requestCode == PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION && grantResults.length == 1
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//...then start the GPS tracking service//
+            startTrackerService();
+        } else {
+//If the user denies the permission request, then display a toast with some more information//
+            Toast.makeText(this, "Please enable location services to allow GPS tracking", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void startTrackerService() {
+        startService(new Intent(this, TrackingService.class));
+//Notify the user that tracking has been enabled//
+        Toast.makeText(this, "GPS tracking enabled", Toast.LENGTH_SHORT).show();
+//Close MainActivity//
+        progressDialog.dismiss();
+    }
 
     /*****************************************************/
 
