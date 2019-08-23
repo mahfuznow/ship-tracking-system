@@ -141,7 +141,7 @@ public class HomeActivity extends AppCompatActivity
         ownerPhone = hView.findViewById(R.id.ownerPhone);
 
         loadContents();
-        startTracking();
+
 
         track.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -257,6 +257,9 @@ public class HomeActivity extends AppCompatActivity
                             ownerPhone.setText(sOwnerPhone);
 
                             progressDialog.dismiss();
+
+                            //starting tracking
+                            startTracking();
                         }
                         catch (Exception e) {
                             progressDialog.dismiss();
