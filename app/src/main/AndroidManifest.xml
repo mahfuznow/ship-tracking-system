@@ -18,9 +18,11 @@
         android:theme="@style/AppThemeNoActionBar">
         <activity android:name=".ShipListActivity" />
 
-        <activity android:name=".EditProfileActivity" />
+        <activity android:name=".EditProfileActivity"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".ProfileActivity" />
-        <activity android:name=".SignUpActivity" />
+        <activity android:name=".SignUpActivity"
+            android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".MapsActivity" />
 
         <activity android:name=".LogInActivity">

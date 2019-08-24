@@ -1,5 +1,6 @@
 package just.cse.mahfuz.shiptrackingsystem;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -66,6 +67,7 @@ public class HomeActivity extends AppCompatActivity
     FirebaseFirestore firebaseFirestore;
 
     Date internetDate;
+    private boolean isGPS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +90,9 @@ public class HomeActivity extends AppCompatActivity
         track=findViewById(R.id.track);
 
         createNotificationChannel();
+
+        //Turning on gps if not, then start tracking
+        turnOnGps();
 
         //nav Drawer
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -122,7 +127,7 @@ public class HomeActivity extends AppCompatActivity
         youtube.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openLinkInBrowser("www.facebook.com");
+                openLinkInBrowser("www.youtube.com");
             }
         });
 
@@ -258,8 +263,7 @@ public class HomeActivity extends AppCompatActivity
 
                             progressDialog.dismiss();
 
-                            //starting tracking
-                            startTracking();
+
                         }
                         catch (Exception e) {
                             progressDialog.dismiss();
@@ -277,6 +281,7 @@ public class HomeActivity extends AppCompatActivity
 
     }
 
+    /*****************************************************************/
     private void startTracking() {
         progressDialog.setMessage("Initializing Tracking...");
         progressDialog.show();
@@ -442,6 +447,36 @@ public class HomeActivity extends AppCompatActivity
                 = (ConnectivityManager) getSystemService(context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+
+
+ /**************************************************/
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //for turning on gps
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == AppConstants.GPS_REQUEST) {
+                isGPS = true; // flag maintain before get location
+                //Toast.makeText(context,String.valueOf(isGPS),Toast.LENGTH_SHORT).show();
+                startTracking();
+            }
+        }
+    }
+
+    public void turnOnGps() {
+        new GpsUtils(this).turnGPSOn(new GpsUtils.onGpsListener() {
+            @Override
+            public void gpsStatus(boolean isGPSEnable) {
+                isGPS = isGPSEnable;
+                if (isGPS) {
+                    startTracking();
+                }
+            }
+        });
+//        Intent viewIntent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+//        startActivity(viewIntent);
     }
 
 }

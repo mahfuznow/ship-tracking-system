@@ -16,6 +16,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 //import android.support.v4.content.ContextCompat;
+import android.graphics.BitmapFactory;
 import android.os.IBinder;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -26,6 +27,7 @@ import android.app.Notification;
 import android.content.pm.PackageManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 
@@ -64,25 +66,29 @@ public class TrackingService extends Service {
         PendingIntent broadcastIntent = PendingIntent.getBroadcast(
                 this, 0, new Intent(stop), PendingIntent.FLAG_UPDATE_CURRENT);
 
+
 // Create the persistent notification//
         Notification.Builder builder = new Notification.Builder(this,"AIS")
                 .setContentTitle(getString(R.string.app_name))
                 .setContentText(getString(R.string.tracking_enabled_notif))
 //Make this notification ongoing so it can’t be dismissed by the user//
                 .setOngoing(true)
-                .setContentIntent(broadcastIntent)
-                .setSmallIcon(R.drawable.marker_ship);
+//                .setContentIntent(broadcastIntent)
+                .setSmallIcon(R.drawable.marker_icon)
+                .setLargeIcon(BitmapFactory.decodeResource(this.getResources(),
+                        R.drawable.marker_icon))
+                .addAction(R.drawable.marker_icon, "Stop Tracking",broadcastIntent);
         startForeground(1, builder.build());
     }
 
     protected BroadcastReceiver stopReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-
 //Unregister the BroadcastReceiver when the notification is tapped//
             unregisterReceiver(stopReceiver);
 //Stop the Service//
             stopSelf();
+            Toast.makeText(context,"Tracking has been desabled",Toast.LENGTH_LONG).show();
         }
     };
 
@@ -119,13 +125,16 @@ public class TrackingService extends Service {
                         uid = firebaseAuth.getUid();
                         //Writing into firestore
                         Map<String, Object> updateValue = new HashMap<>();
-                        updateValue.put("latitude", String.valueOf(location.getLatitude()));
-                        updateValue.put("longitude", String.valueOf(location.getLongitude()));
-                        updateValue.put("speed", String.valueOf(location.getSpeed()));
+                        updateValue.put("sLatitude", String.valueOf(location.getLatitude()));
+                        updateValue.put("sLongitude", String.valueOf(location.getLongitude()));
+                        updateValue.put("sSpeed", String.valueOf(location.getSpeed()));
                         firebaseFirestore.collection("users").document(uid).update(updateValue);
                     }
                 }
             }, null);
         }
     }
+
+
+
 }

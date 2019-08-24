@@ -57,14 +57,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+       // mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        getLocationPermission();
+        //getLocationPermission();
 
 
 
@@ -156,28 +156,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
         // Turn on the My Location layer and the related control on the map.
-        updateLocationUI();
+       // updateLocationUI();
 
         // Get the current location of the device and set the position of the map.
-        getDeviceLocation();
+        //getDeviceLocation();
 
 
         mMap.addMarker(new MarkerOptions().position(mDefaultLocation).icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_ship)));
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mDefaultLocation,DEFAULT_ZOOM));
-
-
-
-
-        mMap.getUiSettings().setMapToolbarEnabled(true);
-
-
-
-
-
-
-
-
 
     }
 
@@ -247,8 +234,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     @Override
                     public void onComplete(@NonNull Task task) {
                         if (task.isSuccessful()) {
-                            // Set the map's camera position to the current location of the device.
-
+                            // Set the map's camera position to the current location of the device
                             try {
                                 mLastKnownLocation = (Location) task.getResult();
 
