@@ -76,6 +76,8 @@ public class HomeActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        getSupportActionBar().setTitle("Home");
+
         track=findViewById(R.id.track);
         contacts=findViewById(R.id.contacts);
         profile=findViewById(R.id.profile);
@@ -155,8 +157,7 @@ public class HomeActivity extends AppCompatActivity
                 progressDialog.show();
                 progressDialog.setCancelable(true);
 
-                Intent intent = new Intent(context, ShipListActivity.class);
-                intent.putExtra("type","track");
+                Intent intent = new Intent(context, MapsActivity.class);
                 startActivity(intent);
                 progressDialog.dismiss();
             }
@@ -181,8 +182,7 @@ public class HomeActivity extends AppCompatActivity
                 progressDialog.show();
                 progressDialog.setCancelable(true);
 
-                Intent intent = new Intent(context, ShipListActivity.class);
-                intent.putExtra("type","contacts");
+                Intent intent = new Intent(context, ContactActivity.class);
                 startActivity(intent);
                 progressDialog.dismiss();
             }
@@ -315,7 +315,7 @@ public class HomeActivity extends AppCompatActivity
     private void startTrackerService() {
         startService(new Intent(this, TrackingService.class));
 //Notify the user that tracking has been enabled//
-        Toast.makeText(this, "GPS tracking enabled", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "GPS tracking enabled, Check Notification area to see status", Toast.LENGTH_LONG).show();
 //Close MainActivity//
         progressDialog.dismiss();
     }
@@ -375,7 +375,7 @@ public class HomeActivity extends AppCompatActivity
             progressDialog.show();
             progressDialog.setCancelable(true);
 
-            Intent intent = new Intent(context, ShipListActivity.class);
+            Intent intent = new Intent(context, ContactActivity.class);
             intent.putExtra("type","track");
             startActivity(intent);
             progressDialog.dismiss();
@@ -385,7 +385,7 @@ public class HomeActivity extends AppCompatActivity
             progressDialog.show();
             progressDialog.setCancelable(true);
 
-            Intent intent = new Intent(context, ShipListActivity.class);
+            Intent intent = new Intent(context, ContactActivity.class);
             intent.putExtra("type","contacts");
             startActivity(intent);
             progressDialog.dismiss();
@@ -407,9 +407,10 @@ public class HomeActivity extends AppCompatActivity
 
         }
         else if (id == R.id.nav_logout) {
-            progressDialog.setMessage("Logging out....");
+            progressDialog.setMessage("Logging out...");
             progressDialog.show();
             firebaseAuth.signOut();
+            stopService(new Intent(HomeActivity.this,TrackingService.class));
             finish();
             Intent intent = new Intent(context, LogInActivity.class);
             startActivity(intent);

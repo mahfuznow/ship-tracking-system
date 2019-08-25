@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.MimeTypeMap;
@@ -56,7 +57,6 @@ public class SignUpActivity extends AppCompatActivity {
 
     Context context = SignUpActivity.this;
 
-    ImageView back;
     CircleImageView image;
     Button chooseImage;
     EditText shipName, shipID, password, ownerName, ownerEmail, ownerPhone;
@@ -80,7 +80,9 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        back = findViewById(R.id.back);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Sign Up");
+
         image = findViewById(R.id.image);
         chooseImage = findViewById(R.id.chooseImage);
 
@@ -104,12 +106,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         progressDialog = new ProgressDialog(context);
 
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+
         chooseImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -347,5 +344,15 @@ public class SignUpActivity extends AppCompatActivity {
                 = (ConnectivityManager) getSystemService(context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id==android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

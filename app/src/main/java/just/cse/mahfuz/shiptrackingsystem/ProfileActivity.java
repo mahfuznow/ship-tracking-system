@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -32,7 +33,6 @@ public class ProfileActivity extends AppCompatActivity {
 
     Context context=ProfileActivity.this;
 
-    ImageView back;
     CircleImageView image;
 
     TextView shipName, shipID,country, ownerName, ownerEmail, ownerPhone;
@@ -54,7 +54,9 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        back=findViewById(R.id.back);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Profile");
+
         image=findViewById(R.id.image);
 
         shipName=findViewById(R.id.shipName);
@@ -76,13 +78,6 @@ public class ProfileActivity extends AppCompatActivity {
         uid=firebaseAuth.getUid();
 
         progressDialog = new ProgressDialog(context);
-
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
 
 
         loadContents();
@@ -158,6 +153,15 @@ public class ProfileActivity extends AppCompatActivity {
                     }
                 });
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id==android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

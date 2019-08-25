@@ -27,7 +27,6 @@ import java.util.List;
 import just.cse.mahfuz.shiptrackingsystem.MapsActivity;
 import just.cse.mahfuz.shiptrackingsystem.Model.Users;
 import just.cse.mahfuz.shiptrackingsystem.R;
-import just.cse.mahfuz.shiptrackingsystem.ShipListActivity;
 
 public class ShipListRecyclerAdapter extends RecyclerView.Adapter<ShipListRecyclerAdapter.myViewHolder> {
     Context context;

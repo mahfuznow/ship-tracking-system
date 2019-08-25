@@ -118,7 +118,7 @@ public class LogInActivity extends AppCompatActivity {
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(context, "An error occurred, please try again later", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Please insert correct ID and password", Toast.LENGTH_SHORT).show();
                             progressDialog.dismiss();
                         }
                     })

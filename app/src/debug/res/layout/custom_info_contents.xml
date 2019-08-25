@@ -21,6 +21,20 @@
         >
 
         <TextView
+            android:id="@+id/location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/marker_icon"
+            android:drawablePadding="@dimen/_8sdp"
+            android:fontFamily="@font/reem"
+            android:paddingTop="@dimen/nav_header_vertical_spacing"
+            android:text="Location"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="#fff"
+            android:textSize="@dimen/_11ssp"
+
+            />
+        <TextView
             android:id="@+id/shipName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -35,6 +49,7 @@
             android:textSize="@dimen/_11ssp"
 
             />
+
 
         <TextView
             android:id="@+id/ownerName"

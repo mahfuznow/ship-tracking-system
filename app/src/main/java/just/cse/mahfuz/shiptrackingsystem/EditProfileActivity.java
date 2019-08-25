@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
@@ -54,7 +55,6 @@ public class EditProfileActivity extends AppCompatActivity {
 
     Context context= EditProfileActivity.this;
 
-    ImageView back;
     CircleImageView image;
     Button chooseImage;
     EditText shipName, ownerName, ownerEmail, ownerPhone;
@@ -78,7 +78,9 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
 
-        back=findViewById(R.id.back);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Edit Profile");
+
         image=findViewById(R.id.image);
         chooseImage=findViewById(R.id.chooseImage);
 
@@ -106,13 +108,6 @@ public class EditProfileActivity extends AppCompatActivity {
 
         loadContents();
 
-
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
         chooseImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -403,4 +398,14 @@ public class EditProfileActivity extends AppCompatActivity {
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id==android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,9 +24,9 @@ import java.util.List;
 import just.cse.mahfuz.shiptrackingsystem.Adapter.ShipListRecyclerAdapter;
 import just.cse.mahfuz.shiptrackingsystem.Model.Users;
 
-public class ShipListActivity extends AppCompatActivity {
+public class ContactActivity extends AppCompatActivity {
 
-    Context context = ShipListActivity.this;
+    Context context = ContactActivity.this;
     TextView title;
     RecyclerView recyclerView;
     FirebaseFirestore firebaseFirestore;
@@ -46,6 +47,9 @@ public class ShipListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ship_list);
 
+        getSupportActionBar().setTitle("Contacts");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         title=findViewById(R.id.title);
         recyclerView = findViewById(R.id.recyclerView);
 
@@ -58,18 +62,6 @@ public class ShipListActivity extends AppCompatActivity {
         progressDialog.setMessage("Loading..");
         progressDialog.show();
 
-
-
-        try {
-            type=getIntent().getExtras().getString("type");
-        }
-        catch (Exception e) {
-            type="contacts";
-        }
-
-        if ("track".equals(type)) {
-            title.setText(" Choose a Ship to track");
-        }
 
 
         Query query = firebaseFirestore.collection("users").orderBy("sShipID", Query.Direction.ASCENDING);
@@ -113,5 +105,14 @@ public class ShipListActivity extends AppCompatActivity {
 //                recyclerView.setAdapter(shipListRecyclerAdapter);
 //            }
 //        });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id==android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
