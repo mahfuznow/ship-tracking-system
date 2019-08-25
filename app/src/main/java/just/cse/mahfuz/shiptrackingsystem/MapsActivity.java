@@ -120,6 +120,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     userModel = queryDocumentSnapshots.toObjects(Users.class);
                     progressDialog.dismiss();
                     // Toast.makeText(context,userModel.get(0).getsShipID()+ " "+ userModel.get(3).getsOwnerName(),Toast.LENGTH_LONG).show();
+
+                    //clearing map first
+                    mMap.clear();
                     for (int i = 0; i < userModel.size(); i++) {
                         createMarker(i);
                     }
@@ -197,10 +200,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public void createMarker(int i) {
+
         LatLng location = new LatLng(Double.valueOf(userModel.get(i).getsLatitude()), Double.valueOf(userModel.get(i).getsLongitude()));
         Marker marker = mMap.addMarker(new MarkerOptions().position(location).icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_icon)));
-
         markerPlace[i]=marker.getId();
+
     }
 
 }
