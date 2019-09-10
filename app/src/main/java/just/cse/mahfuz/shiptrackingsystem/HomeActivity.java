@@ -158,6 +158,7 @@ public class HomeActivity extends AppCompatActivity
                 progressDialog.setCancelable(true);
 
                 Intent intent = new Intent(context, MapsActivity.class);
+                intent.putExtra("sShipID",sShipID);
                 startActivity(intent);
                 progressDialog.dismiss();
             }

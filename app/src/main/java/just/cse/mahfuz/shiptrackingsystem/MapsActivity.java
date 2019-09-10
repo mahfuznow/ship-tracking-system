@@ -1,8 +1,11 @@
 package just.cse.mahfuz.shiptrackingsystem;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.app.VoiceInteractor;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 
 import androidx.annotation.NonNull;
@@ -19,6 +22,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,6 +61,7 @@ import javax.annotation.Nullable;
 import de.hdodenhof.circleimageview.CircleImageView;
 import just.cse.mahfuz.shiptrackingsystem.Adapter.CustomWindowAdapter;
 import just.cse.mahfuz.shiptrackingsystem.Adapter.ShipListRecyclerAdapter;
+import just.cse.mahfuz.shiptrackingsystem.Class.OnInfoItemTouchListener;
 import just.cse.mahfuz.shiptrackingsystem.Model.Users;
 
 import java.util.Arrays;
@@ -68,13 +74,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     int DEFAULT_ZOOM = 5;
+    int CURENT_USER_MARKER_ZOOM=10;
     //private GeoDataClient mGeoDataClient;
+
+    Button mapType;
 
     Bitmap bitmap;
     String sImage, sShipName, sShipID, sCountry, sOwnerName, sOwnerEmail, sOwnerPhone;
 
+    LatLng currentUserMarkerLocation;
     CircleImageView image;
-    TextView location,shipID, shipName, ownerName, ownerEmail, ownerPhone;
+    ImageView close;
+    TextView location, shipID, shipName, ownerName, ownerEmail, ownerPhone,destination,deadWeight,draught,journeyDate;
 
     List<Users> userModel;
 
@@ -94,7 +105,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         progressDialog = new ProgressDialog(context);
 
 
-        markerPlace= new String[50];
+        markerPlace = new String[50];
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -102,10 +113,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
 
+        mapType=findViewById(R.id.mapType);
+
         progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Loading..");
         progressDialog.show();
 //
+
+        try {
+            sShipID=getIntent().getExtras().getString("sShipID");
+        }
+        catch (Exception e) {
+
+        }
 
         //adding snapshot listener to database
         Query query = firebaseFirestore.collection("users");
@@ -126,17 +146,42 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     for (int i = 0; i < userModel.size(); i++) {
                         createMarker(i);
                     }
+
                 } else {
                     progressDialog.dismiss();
                     System.out.print("Current data: null");
                 }
             }
         });
+
+        mapType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showMapTypeSelectorDialog();
+            }
+        });
     }
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+
+
+        mMap.setMyLocationEnabled(true);
+        mMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
+            @Override
+            public boolean onMyLocationButtonClick() {
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentUserMarkerLocation, CURENT_USER_MARKER_ZOOM));
+                return false;
+            }
+        });
+//        mMap.setOnMyLocationClickListener(new GoogleMap.OnMyLocationClickListener() {
+//            @Override
+//            public void onMyLocationClick(@NonNull Location location) {
+//                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentUserMarkerLocation, CURENT_USER_MARKER_ZOOM));
+//            }
+//        });
 
         //setting custom layout for marker details
         mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
@@ -146,23 +191,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 return null;
             }
 
+            @SuppressLint("ClickableViewAccessibility")
             @Override
-            public View getInfoContents(Marker marker) {
+            public View getInfoContents(final Marker marker) {
                 // Inflate the layouts for the info window, title and snippet.
-                View infoWindow = getLayoutInflater().inflate(R.layout.custom_info_contents, null);
+                final View infoWindow = getLayoutInflater().inflate(R.layout.custom_info_contents, null);
+
+
+                close = infoWindow.findViewById(R.id.close);
 
                 image = infoWindow.findViewById(R.id.image);
 
                 location = infoWindow.findViewById(R.id.location);
+                shipID = ((TextView) infoWindow.findViewById(R.id.shipID));
                 shipName = ((TextView) infoWindow.findViewById(R.id.shipName));
                 ownerName = ((TextView) infoWindow.findViewById(R.id.ownerName));
                 ownerEmail = ((TextView) infoWindow.findViewById(R.id.ownerEmail));
                 ownerPhone = ((TextView) infoWindow.findViewById(R.id.ownerPhone));
 
+                destination = ((TextView) infoWindow.findViewById(R.id.destination));
+                deadWeight = ((TextView) infoWindow.findViewById(R.id.deadWeight));
+                draught = ((TextView) infoWindow.findViewById(R.id.draught));
+                journeyDate = ((TextView) infoWindow.findViewById(R.id.journeyDate));
 
-               //checking marker id & find corresponding data
+
+                //checking marker id & find corresponding data
                 int index = -1; //to check index not found
-                for (int i=0;i<markerPlace.length;i++) {
+                for (int i = 0; i < markerPlace.length; i++) {
                     if (markerPlace[i].equals(marker.getId())) {
                         index = i;
                         break;
@@ -170,41 +225,145 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
 
 
-                if (index!=-1) {
+                if (index != -1) {
                     if (!"".equals(userModel.get(index).getsImage()) && equals(userModel.get(index).getsImage() != null)) {
                         Glide.with(context)
                                 .load(sImage)
                                 .into(image);
                     }
 
-                    location.setText("Lat: "+userModel.get(index).getsLatitude()+"\nLng: "+userModel.get(index).getsLongitude()+"\nSpeed: "+userModel.get(index).getsSpeed());
-                    shipName.setText(userModel.get(index).getsShipName());
-                    ownerName.setText(userModel.get(index).getsOwnerName());
-                    ownerEmail.setText(userModel.get(index).getsOwnerEmail());
-                    ownerPhone.setText(userModel.get(index).getsOwnerPhone());
+                    location.setText("Lat: " + userModel.get(index).getsLatitude() + "\nLng: " + userModel.get(index).getsLongitude() + "\nSpeed: " + userModel.get(index).getsSpeed());
+                    shipID.setText("Ship ID: " +userModel.get(index).getsShipID());
+                    shipName.setText("Ship Name: " +userModel.get(index).getsShipName());
+                    ownerName.setText("Owner's Name: " +userModel.get(index).getsOwnerName());
+                    ownerEmail.setText("Owner's Email: " +userModel.get(index).getsOwnerEmail());
+                    ownerPhone.setText("Owner's Phone: " +userModel.get(index).getsOwnerPhone());
+
+                    destination.setText("Destination: " +userModel.get(index).getsDestination());
+                    deadWeight.setText("DeadWeight: " +userModel.get(index).getsDeadWeight());
+                    draught.setText("Draught: " +userModel.get(index).getsDraught());
+                    journeyDate.setText("JourneyDate: " +userModel.get(index).getsJourneyDate());
                 }
 
+//                //force showing the info window when click on map (info window is opened)
+//                mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+//                    @Override
+//                    public void onMapClick(LatLng latLng) {
+//                        marker.showInfoWindow();
+//                    }
+//                });
+
+
+
+
+
+//                close.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                                  }
+//                });
+
+//                close.setOnTouchListener(new OnInfoItemTouchListener(close,getResources().getDrawable(R.drawable.close),getResources().getDrawable(R.drawable.close)) {
+//                    @Override
+//                    protected void onClickConfirmed(View v, Marker marker) {
+//                        marker.hideInfoWindow();
+//                        Toast.makeText(MapsActivity.this,"sdfj",Toast.LENGTH_SHORT).show();
+//                    }
+//                });
 
 
                 return infoWindow;
             }
         });
+
+//        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+//            @Override
+//            public boolean onMarkerClick(Marker marker) {
+//                if (marker.isInfoWindowShown()) {
+//                    marker.hideInfoWindow();
+//                }
+//                else {
+//                    marker.showInfoWindow();
+//                }
+//                return false;
+//            }
+//        });
 //
 
 
         //default location is Jamuna bridge
         LatLng mDefaultLocation = new LatLng(24.3997, 89.7772);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mDefaultLocation,DEFAULT_ZOOM));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mDefaultLocation, DEFAULT_ZOOM));
 
 
     }
 
     public void createMarker(int i) {
-
+        Marker marker;
         LatLng location = new LatLng(Double.valueOf(userModel.get(i).getsLatitude()), Double.valueOf(userModel.get(i).getsLongitude()));
-        Marker marker = mMap.addMarker(new MarkerOptions().position(location).icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_icon)));
-        markerPlace[i]=marker.getId();
 
+        //this is for the location of that user which is logged in
+        if (userModel.get(i).getsShipID().equals(sShipID)) {
+            marker = mMap.addMarker(new MarkerOptions().position(location).icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_icon_green)));
+            //storing the LatLng of the current user marker
+            currentUserMarkerLocation=new LatLng(Double.valueOf(userModel.get(i).getsLatitude()), Double.valueOf(userModel.get(i).getsLongitude()));
+        }
+        else {
+            marker = mMap.addMarker(new MarkerOptions().position(location).icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_icon)));
+        }
+
+        markerPlace[i] = marker.getId();
+
+
+    }
+
+
+
+
+
+//method for choosing mapType
+    private static final CharSequence[] MAP_TYPE_ITEMS = {"Normal","Satellite", "Terrain", "Hybrid"};
+    private void showMapTypeSelectorDialog() {
+        // Prepare the dialog by setting up a Builder.
+        final String fDialogTitle = "Select Map Type";
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(fDialogTitle);
+
+        // Find the current map type to pre-check the item representing the current state.
+        int checkItem = mMap.getMapType() - 1;
+
+        // Add an OnClickListener to the dialog, so that the selection will be handled.
+        builder.setSingleChoiceItems(
+                MAP_TYPE_ITEMS,
+                checkItem,
+                new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int item) {
+                        // Locally create a finalised object.
+
+                        // Perform an action depending on which item was selected.
+                        switch (item) {
+                            case 1:
+                                mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+                                break;
+                            case 2:
+                                mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+                                break;
+                            case 3:
+                                mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                                break;
+                            default:
+                                mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                        }
+                        dialog.dismiss();
+                    }
+                }
+        );
+
+        // Build the dialog and show it.
+        AlertDialog fMapTypeDialog = builder.create();
+        fMapTypeDialog.setCanceledOnTouchOutside(true);
+        fMapTypeDialog.show();
     }
 
 }

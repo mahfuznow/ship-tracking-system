@@ -8,6 +8,16 @@
     android:orientation="vertical"
     android:padding="@dimen/_10sdp">
 
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:src="@drawable/close"
+        >
+
+    </ImageView>
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/image"
         android:layout_width="100dp"
@@ -35,13 +45,27 @@
 
             />
         <TextView
-            android:id="@+id/shipName"
+            android:id="@+id/shipID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ship"
             android:drawablePadding="@dimen/_8sdp"
             android:fontFamily="@font/reem"
             android:paddingTop="@dimen/nav_header_vertical_spacing"
+            android:text="Ship ID"
+            android:textAllCaps="true"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="#fff"
+            android:textSize="@dimen/_9ssp"
+
+            />
+        <TextView
+            android:id="@+id/shipName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ship"
+            android:drawablePadding="@dimen/_8sdp"
+            android:fontFamily="@font/reem"
             android:text="Ship Name"
             android:textAllCaps="true"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
@@ -84,6 +108,51 @@
             android:drawablePadding="@dimen/_8sdp"
             android:fontFamily="@font/reem"
             android:text="+880170000001"
+            android:textColor="#fff"
+            android:textSize="@dimen/_11ssp" />
+
+
+        <TextView
+            android:id="@+id/destination"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ship"
+            android:drawablePadding="@dimen/_8sdp"
+            android:fontFamily="@font/reem"
+            android:text="Destination"
+            android:textColor="#fff"
+            android:textSize="@dimen/_11ssp" />
+
+        <TextView
+            android:id="@+id/deadWeight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ship"
+            android:drawablePadding="@dimen/_8sdp"
+            android:fontFamily="@font/reem"
+            android:text="Dead Weight"
+            android:textColor="#fff"
+            android:textSize="@dimen/_11ssp" />
+
+        <TextView
+            android:id="@+id/draught"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ship"
+            android:drawablePadding="@dimen/_8sdp"
+            android:fontFamily="@font/reem"
+            android:text="Draught"
+            android:textColor="#fff"
+            android:textSize="@dimen/_11ssp" />
+
+        <TextView
+            android:id="@+id/journeyDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ship"
+            android:drawablePadding="@dimen/_8sdp"
+            android:fontFamily="@font/reem"
+            android:text="Journey Date"
             android:textColor="#fff"
             android:textSize="@dimen/_11ssp" />
     </LinearLayout>

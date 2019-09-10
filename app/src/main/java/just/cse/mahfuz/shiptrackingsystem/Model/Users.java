@@ -3,6 +3,7 @@ package just.cse.mahfuz.shiptrackingsystem.Model;
 public class Users {
     String sImage, sShipName, sShipID, sCountry, sOwnerName, sOwnerEmail, sOwnerPhone;
     String sLatitude,sLongitude,sSpeed;
+    String sDestination,sDeadWeight,sDraught,sJourneyDate;
 
     public Users() {
     }
@@ -18,6 +19,23 @@ public class Users {
         this.sLatitude = sLatitude;
         this.sLongitude = sLongitude;
         this.sSpeed = sSpeed;
+    }
+
+    public Users(String sImage, String sShipName, String sShipID, String sCountry, String sOwnerName, String sOwnerEmail, String sOwnerPhone, String sLatitude, String sLongitude, String sSpeed, String sDestination, String sDeadWeight, String sDraught, String sJourneyDate) {
+        this.sImage = sImage;
+        this.sShipName = sShipName;
+        this.sShipID = sShipID;
+        this.sCountry = sCountry;
+        this.sOwnerName = sOwnerName;
+        this.sOwnerEmail = sOwnerEmail;
+        this.sOwnerPhone = sOwnerPhone;
+        this.sLatitude = sLatitude;
+        this.sLongitude = sLongitude;
+        this.sSpeed = sSpeed;
+        this.sDestination = sDestination;
+        this.sDeadWeight = sDeadWeight;
+        this.sDraught = sDraught;
+        this.sJourneyDate = sJourneyDate;
     }
 
     public String getsImage() {
@@ -98,5 +116,37 @@ public class Users {
 
     public void setsSpeed(String sSpeed) {
         this.sSpeed = sSpeed;
+    }
+
+    public String getsDestination() {
+        return sDestination;
+    }
+
+    public void setsDestination(String sDestination) {
+        this.sDestination = sDestination;
+    }
+
+    public String getsDeadWeight() {
+        return sDeadWeight;
+    }
+
+    public void setsDeadWeight(String sDeadWeight) {
+        this.sDeadWeight = sDeadWeight;
+    }
+
+    public String getsDraught() {
+        return sDraught;
+    }
+
+    public void setsDraught(String sDraught) {
+        this.sDraught = sDraught;
+    }
+
+    public String getsJourneyDate() {
+        return sJourneyDate;
+    }
+
+    public void setsJourneyDate(String sJourneyDate) {
+        this.sJourneyDate = sJourneyDate;
     }
 }
