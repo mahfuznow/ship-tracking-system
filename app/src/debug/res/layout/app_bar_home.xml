@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeActivity">
+    tools:context=".HomeActivity"
+    android:background="#073D65"
+    >
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -18,9 +20,11 @@
             android:background="@drawable/gradient_background"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
+
+        <include layout="@layout/content_home_new" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/content_home" />
+
 
 
 

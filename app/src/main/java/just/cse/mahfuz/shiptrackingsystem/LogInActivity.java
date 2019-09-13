@@ -59,7 +59,7 @@ public class LogInActivity extends AppCompatActivity {
 
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         if (currentUser != null) {
-            Intent intent = new Intent(context, HomeActivity.class);
+            Intent intent = new Intent(context, HomeActivityNew.class);
             startActivity(intent);
         }
     }
@@ -105,7 +105,7 @@ public class LogInActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 progressDialog.dismiss();
-                                Intent intent = new Intent(context, HomeActivity.class);
+                                Intent intent = new Intent(context, HomeActivityNew.class);
                                 finish();
                                 startActivity(intent);
 

@@ -1,5 +1,6 @@
 package just.cse.mahfuz.shiptrackingsystem;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -74,7 +75,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     int DEFAULT_ZOOM = 5;
-    int CURENT_USER_MARKER_ZOOM=10;
+    int CURENT_USER_MARKER_ZOOM = 10;
     //private GeoDataClient mGeoDataClient;
 
     Button mapType;
@@ -85,7 +86,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     LatLng currentUserMarkerLocation;
     CircleImageView image;
     ImageView close;
-    TextView location, shipID, shipName, ownerName, ownerEmail, ownerPhone,destination,deadWeight,draught,journeyDate;
+    TextView location, shipID, shipName, ownerName, ownerEmail, ownerPhone, destination, deadWeight, draught, journeyDate;
 
     List<Users> userModel;
 
@@ -94,7 +95,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     ProgressDialog progressDialog;
     //ArrayList<String> markerPlaces;
     String markerPlace[];
-
+    private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
+    private boolean isGPS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,8 +106,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         firebaseFirestore = FirebaseFirestore.getInstance();
         progressDialog = new ProgressDialog(context);
 
+        currentUserMarkerLocation = new LatLng(0.0, 0.0);
 
-        markerPlace = new String[50];
+
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -113,17 +116,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
 
-        mapType=findViewById(R.id.mapType);
+        mapType = findViewById(R.id.mapType);
 
         progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Loading..");
         progressDialog.show();
 //
 
+        //turning on GPS
+        turnOnGps();
+
         try {
-            sShipID=getIntent().getExtras().getString("sShipID");
-        }
-        catch (Exception e) {
+            sShipID = getIntent().getExtras().getString("sShipID");
+        } catch (Exception e) {
 
         }
 
@@ -143,6 +148,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                     //clearing map first
                     mMap.clear();
+                    //clearing array (should be initiated here)
+                    markerPlace = new String[50];
                     for (int i = 0; i < userModel.size(); i++) {
                         createMarker(i);
                     }
@@ -167,21 +174,37 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        //enabling my location button
+        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            mMap.setMyLocationEnabled(true);
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+        }
 
-        mMap.setMyLocationEnabled(true);
-        mMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
-            @Override
-            public boolean onMyLocationButtonClick() {
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentUserMarkerLocation, CURENT_USER_MARKER_ZOOM));
-                return false;
-            }
-        });
-//        mMap.setOnMyLocationClickListener(new GoogleMap.OnMyLocationClickListener() {
-//            @Override
-//            public void onMyLocationClick(@NonNull Location location) {
-//                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentUserMarkerLocation, CURENT_USER_MARKER_ZOOM));
-//            }
-//        });
+        if (!(currentUserMarkerLocation.latitude==0.0)) {
+            //checking current user is offline
+            mMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
+                @Override
+                public boolean onMyLocationButtonClick() {
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentUserMarkerLocation, CURENT_USER_MARKER_ZOOM));
+                    return false;
+                }
+            });
+        }
+        else  {
+            mMap.setOnMyLocationClickListener(new GoogleMap.OnMyLocationClickListener() {
+                @Override
+                public void onMyLocationClick(@NonNull Location location) {
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentUserMarkerLocation, CURENT_USER_MARKER_ZOOM));
+                }
+            });
+        }
+
+
 
         //setting custom layout for marker details
         mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
@@ -233,16 +256,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
 
                     location.setText("Lat: " + userModel.get(index).getsLatitude() + "\nLng: " + userModel.get(index).getsLongitude() + "\nSpeed: " + userModel.get(index).getsSpeed());
-                    shipID.setText("Ship ID: " +userModel.get(index).getsShipID());
-                    shipName.setText("Ship Name: " +userModel.get(index).getsShipName());
-                    ownerName.setText("Owner's Name: " +userModel.get(index).getsOwnerName());
-                    ownerEmail.setText("Owner's Email: " +userModel.get(index).getsOwnerEmail());
-                    ownerPhone.setText("Owner's Phone: " +userModel.get(index).getsOwnerPhone());
+                    shipID.setText("Ship ID: " + userModel.get(index).getsShipID());
+                    shipName.setText("Ship Name: " + userModel.get(index).getsShipName());
+                    ownerName.setText("Owner's Name: " + userModel.get(index).getsOwnerName());
+                    ownerEmail.setText("Owner's Email: " + userModel.get(index).getsOwnerEmail());
+                    ownerPhone.setText("Owner's Phone: " + userModel.get(index).getsOwnerPhone());
 
-                    destination.setText("Destination: " +userModel.get(index).getsDestination());
-                    deadWeight.setText("DeadWeight: " +userModel.get(index).getsDeadWeight());
-                    draught.setText("Draught: " +userModel.get(index).getsDraught());
-                    journeyDate.setText("JourneyDate: " +userModel.get(index).getsJourneyDate());
+                    destination.setText("Destination: " + userModel.get(index).getsDestination());
+                    deadWeight.setText("DeadWeight: " + userModel.get(index).getsDeadWeight());
+                    draught.setText("Draught: " + userModel.get(index).getsDraught());
+                    journeyDate.setText("JourneyDate: " + userModel.get(index).getsJourneyDate());
                 }
 
 //                //force showing the info window when click on map (info window is opened)
@@ -252,9 +275,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //                        marker.showInfoWindow();
 //                    }
 //                });
-
-
-
 
 
 //                close.setOnClickListener(new View.OnClickListener() {
@@ -300,29 +320,36 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public void createMarker(int i) {
         Marker marker;
-        LatLng location = new LatLng(Double.valueOf(userModel.get(i).getsLatitude()), Double.valueOf(userModel.get(i).getsLongitude()));
 
-        //this is for the location of that user which is logged in
-        if (userModel.get(i).getsShipID().equals(sShipID)) {
-            marker = mMap.addMarker(new MarkerOptions().position(location).icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_icon_green)));
-            //storing the LatLng of the current user marker
-            currentUserMarkerLocation=new LatLng(Double.valueOf(userModel.get(i).getsLatitude()), Double.valueOf(userModel.get(i).getsLongitude()));
+        if ("offline".equals(userModel.get(i).getsLatitude()) || "offline".equals(userModel.get(i).getsLongitude())) {
+            //do not create marker
+            markerPlace[i] = "offline";
         }
         else {
-            marker = mMap.addMarker(new MarkerOptions().position(location).icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_icon)));
+            //creating marker
+            //this is for the location of that user which is logged in
+            LatLng location = new LatLng(Double.valueOf(userModel.get(i).getsLatitude()), Double.valueOf(userModel.get(i).getsLongitude()));
+
+            if (userModel.get(i).getsShipID().equals(sShipID)) {
+                marker = mMap.addMarker(new MarkerOptions().position(location).icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_icon_green)));
+                //storing the LatLng of the current user marker
+                currentUserMarkerLocation = new LatLng(Double.valueOf(userModel.get(i).getsLatitude()), Double.valueOf(userModel.get(i).getsLongitude()));
+            } else {
+                marker = mMap.addMarker(new MarkerOptions().position(location).icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_icon)));
+            }
+
+            //keep tracking of the markers ID into an array
+            markerPlace[i] = marker.getId();
         }
 
-        markerPlace[i] = marker.getId();
 
 
     }
 
 
+    //method for choosing mapType
+    private static final CharSequence[] MAP_TYPE_ITEMS = {"Normal", "Satellite", "Terrain", "Hybrid"};
 
-
-
-//method for choosing mapType
-    private static final CharSequence[] MAP_TYPE_ITEMS = {"Normal","Satellite", "Terrain", "Hybrid"};
     private void showMapTypeSelectorDialog() {
         // Prepare the dialog by setting up a Builder.
         final String fDialogTitle = "Select Map Type";
@@ -364,6 +391,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         AlertDialog fMapTypeDialog = builder.create();
         fMapTypeDialog.setCanceledOnTouchOutside(true);
         fMapTypeDialog.show();
+    }
+
+
+    /*****************************************************************************/
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION) {
+            if (permissions.length == 1 &&
+                    permissions[0] == Manifest.permission.ACCESS_FINE_LOCATION &&
+                    grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                mMap.setMyLocationEnabled(true);
+            } else {
+                // Permission was denied. Display an error message.
+            }
+        }
+    }
+
+
+    public void turnOnGps() {
+        new GpsUtils(MapsActivity.this).turnGPSOn(new GpsUtils.onGpsListener() {
+            @Override
+            public void gpsStatus(boolean isGPSEnable) {
+                isGPS = isGPSEnable;
+            }
+        });
+//        Intent viewIntent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+//        startActivity(viewIntent);
     }
 
 }

@@ -367,9 +367,9 @@ public class EditProfileActivity extends AppCompatActivity {
         Toast.makeText(context, "Profile Succesfully edited", Toast.LENGTH_LONG).show();
         progressDialog.dismiss();
 
-        Intent homeintent = new Intent(context, ProfileActivity.class);
+        Intent intent = new Intent(context, ProfileActivity.class);
         finish();
-        startActivity(homeintent);
+        startActivity(intent);
     }
 
     public String getFileExtension(Uri uri) {

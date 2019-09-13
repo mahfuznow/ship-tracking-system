@@ -12,16 +12,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-
+        <activity android:name=".JourneyHistory"></activity>
         <activity android:name=".ContactActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
+
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
-
         <activity
             android:name=".EditProfileActivity"
             android:windowSoftInputMode="stateHidden" />
@@ -30,7 +30,6 @@
             android:name=".SignUpActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".MapsActivity" />
-
         <activity
             android:name=".LogInActivity"
             android:theme="@style/AppThemeNoActionBar">
@@ -49,31 +48,29 @@
              You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
         <activity
-            android:name=".HomeActivity"
+            android:name=".HomeActivityNew"
             android:theme="@style/AppThemeNoActionBar" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+
         <service
             android:name=".TrackingService"
             android:enabled="true"
             android:exported="true" />
+
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
     </application>
-
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <dist:module dist:instant="true" />
 
     <dist:module dist:instant="true" />
