@@ -7,15 +7,11 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -25,14 +21,16 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.List;
 
+import just.cse.mahfuz.shiptrackingsystem.Model.History;
 import just.cse.mahfuz.shiptrackingsystem.Model.Users;
 import just.cse.mahfuz.shiptrackingsystem.R;
 
-public class ShipListRecyclerAdapter extends RecyclerView.Adapter<ShipListRecyclerAdapter.myViewHolder> implements Filterable {
+public class HistoryListRecyclerAdapter extends RecyclerView.Adapter<HistoryListRecyclerAdapter.myViewHolder> implements Filterable {
     Context context;
-    List<Users> usersModel;
-    List<Users> filteredUserModel;
-    String sImage, sShipName, sShipID, sCountry, sOwnerName, sOwnerEmail, sOwnerPhone;
+    List<History> historyModel;
+    List<History> filteredHistoryModel;
+
+    String sStartDate, sEndDate, sDestination, sDeadWeight, sDraught, timestamp;
 
     FirebaseFirestore firebaseFirestore;
     FirebaseAuth firebaseAuth;
@@ -42,10 +40,10 @@ public class ShipListRecyclerAdapter extends RecyclerView.Adapter<ShipListRecycl
     String type;
 
 
-    public ShipListRecyclerAdapter(Context c, List<Users> usrs, String type) {
+    public HistoryListRecyclerAdapter(Context c, List<History> historyModel, String type) {
         context = c;
-        usersModel = usrs;
-        filteredUserModel = usrs;
+        this.historyModel = historyModel;
+        filteredHistoryModel = historyModel;
         this.type = type;
 
         firebaseFirestore = FirebaseFirestore.getInstance();
@@ -57,48 +55,28 @@ public class ShipListRecyclerAdapter extends RecyclerView.Adapter<ShipListRecycl
 
     @NonNull
     @Override
-    public ShipListRecyclerAdapter.myViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public HistoryListRecyclerAdapter.myViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-        View view = inflater.inflate(R.layout.contact_row, viewGroup, false);
+        View view = inflater.inflate(R.layout.history_row, viewGroup, false);
         return new myViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ShipListRecyclerAdapter.myViewHolder myViewHolder, int i) {
+    public void onBindViewHolder(@NonNull final HistoryListRecyclerAdapter.myViewHolder myViewHolder, int i) {
 
 
-        sImage = filteredUserModel.get(i).getsImage();
-        sShipID = filteredUserModel.get(i).getsShipID();
-        sShipName = filteredUserModel.get(i).getsShipName();
-        sCountry = filteredUserModel.get(i).getsCountry();
-        sOwnerName = filteredUserModel.get(i).getsOwnerName();
-        sOwnerEmail = filteredUserModel.get(i).getsOwnerEmail();
-        sOwnerPhone = filteredUserModel.get(i).getsOwnerPhone();
+        sStartDate = filteredHistoryModel.get(i).getsStartDate();
+        sEndDate = filteredHistoryModel.get(i).getsEndDate();
+        sDestination = filteredHistoryModel.get(i).getsDestination();
+        sDeadWeight = filteredHistoryModel.get(i).getsDeadWeight();
+        sDraught = filteredHistoryModel.get(i).getsDraught();
 
+        myViewHolder.startDate.setText("Start: "+sStartDate);
+        myViewHolder.endDate.setText("End: "+sEndDate);
+        myViewHolder.destination.setText("Destination: "+sDestination);
+        myViewHolder.deadWeight.setText("Dead Weight: "+sDeadWeight);
+        myViewHolder.draught.setText("Draught: "+sDraught);
 
-        if (!"".equals(sImage) && sImage != null) {
-            Glide.with(context)
-                    .load(sImage)
-                    //.override(80, 80)
-                    //.thumbnail(0.1f)
-                    .into(myViewHolder.image);
-        }
-
-        myViewHolder.shipID.setText("ID: "+sShipID);
-        myViewHolder.shipName.setText("Ship Name: "+sShipName);
-        myViewHolder.ownerName.setText("Owner's Name: "+sOwnerName);
-        myViewHolder.ownerEmail.setText("Owner's Email: "+sOwnerEmail);
-        myViewHolder.ownerPhone.setText("Owner's Phone: "+sOwnerPhone);
-
-        myViewHolder.call.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(Intent.ACTION_DIAL);
-                String p = "tel:+88" + myViewHolder.ownerPhone.getText().toString().trim();
-                i.setData(Uri.parse(p));
-                context.startActivity(i);
-            }
-        });
 
 //        if ("contacts".equals(type)) {
 //
@@ -147,30 +125,23 @@ public class ShipListRecyclerAdapter extends RecyclerView.Adapter<ShipListRecycl
     @Override
     public int getItemCount() {
 
-        return filteredUserModel.size();
+        return filteredHistoryModel.size();
     }
 
 
     class myViewHolder extends RecyclerView.ViewHolder {
-        LinearLayout linearLayout;
-        ImageView image;
-        TextView shipID, shipName, ownerName, ownerEmail, ownerPhone;
-        Button call;
+        TextView startDate, endDate, destination, deadWeight, draught;
+
 
 
         public myViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            linearLayout = itemView.findViewById(R.id.constraintLayout);
-            image = itemView.findViewById(R.id.image);
-            shipID = itemView.findViewById(R.id.shipID);
-            shipName = itemView.findViewById(R.id.shipName);
-            ownerName = itemView.findViewById(R.id.ownerName);
-            ownerEmail = itemView.findViewById(R.id.ownerEmail);
-            ownerPhone = itemView.findViewById(R.id.ownerPhone);
-
-            call = itemView.findViewById(R.id.call);
-
+            startDate = itemView.findViewById(R.id.startDate);
+            endDate = itemView.findViewById(R.id.endDate);
+            destination = itemView.findViewById(R.id.destination);
+            deadWeight = itemView.findViewById(R.id.deadWeight);
+            draught = itemView.findViewById(R.id.draught);
 
         }
     }
@@ -183,31 +154,31 @@ public class ShipListRecyclerAdapter extends RecyclerView.Adapter<ShipListRecycl
             protected FilterResults performFiltering(CharSequence charSequence) {
                 String charString = charSequence.toString();
                 if (charString.isEmpty()) {
-                    filteredUserModel = usersModel;
+                    filteredHistoryModel = historyModel;
                 } else {
-                    List<Users> filteredList = new ArrayList<>();
-                    for (Users row : usersModel) {
+                    List<History> filteredList = new ArrayList<>();
+                    for (History row : historyModel) {
                         // name match condition. this might differ depending on your requirement
                         // here we are looking for name or phone number match
-                        if (row.getsShipName().toLowerCase().contains(charString.toLowerCase())
-                                || row.getsOwnerName().toLowerCase().contains(charString.toLowerCase())
-                                || row.getsOwnerEmail().toLowerCase().contains(charString.toLowerCase())
-                                || row.getsShipID().contains(charSequence)
-                                || row.getsOwnerPhone().contains(charSequence)) {
+                        if (row.getsStartDate().contains(charSequence)
+                                || row.getsEndDate().contains(charSequence)
+                                || row.getsDestination().toLowerCase().contains(charString.toLowerCase())
+                                || row.getsDeadWeight().contains(charSequence)
+                                || row.getsDraught().toLowerCase().contains(charString.toLowerCase())) {
                             filteredList.add(row);
                         }
                     }
-                    filteredUserModel = filteredList;
+                    filteredHistoryModel = filteredList;
                 }
 
                 FilterResults filterResults = new FilterResults();
-                filterResults.values = filteredUserModel;
+                filterResults.values = filteredHistoryModel;
                 return filterResults;
             }
 
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                filteredUserModel = (ArrayList<Users>) filterResults.values;
+                filteredHistoryModel = (ArrayList<History>) filterResults.values;
                 notifyDataSetChanged();
             }
         };

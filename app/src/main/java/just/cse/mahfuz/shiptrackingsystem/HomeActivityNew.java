@@ -44,6 +44,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -179,7 +180,7 @@ public class HomeActivityNew extends AppCompatActivity
                 if (!triggerState) {
                     turnOnGps();
                     if (isGPS) {
-                        showJourneyHistoryDialouge();
+                        showJourneyDetailsDialouge();
                     } else {
                         Toast.makeText(HomeActivityNew.this, "Please Enable GPS", Toast.LENGTH_SHORT).show();
                         turnOnGps();
@@ -188,11 +189,46 @@ public class HomeActivityNew extends AppCompatActivity
                     showConfirmAlertDialouge("Do you want to End the journey?", new Runnable() {
                         @Override
                         public void run() {
-                            //stopping the tracking service
-                            stopService(new Intent(HomeActivityNew.this, TrackingService.class));
-                            setTriggerIsOff();
-                            Toast.makeText(HomeActivityNew.this, "Journey Ended Successfully", Toast.LENGTH_SHORT).show();
-                        }
+
+                            progressDialog.setMessage("Please wait..");
+
+                            //adding journey history to database
+                            String startDate= sJourneyDate;
+                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+                            String endDate= (simpleDateFormat.format(Calendar.getInstance().getTime()));
+                            String destination= sDestination;
+                            String deadWeight= sDeadWeight;
+                            String draught= sDraught;
+
+                            Map<String,String> addHistory = new HashMap<>();
+                            addHistory.put("sStartDate",startDate);
+                            addHistory.put("sEndDate",endDate);
+                            addHistory.put("sDestination",destination);
+                            addHistory.put("sDeadWeight",deadWeight);
+                            addHistory.put("sDraught",draught);
+                            addHistory.put("timestamp",String.valueOf(System.currentTimeMillis()));
+
+                            firebaseFirestore.collection("users").document(uid).collection("journeyHistory").add(addHistory)
+                                    .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<DocumentReference> task) {
+                                            //stopping the tracking service
+                                            stopService(new Intent(HomeActivityNew.this, TrackingService.class));
+                                            setTriggerIsOff();
+                                            Toast.makeText(HomeActivityNew.this, "Journey Ended Successfully", Toast.LENGTH_SHORT).show();
+
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            progressDialog.dismiss();
+                                            Toast.makeText(HomeActivityNew.this, "An Error occurred, please check internet connection and try again", Toast.LENGTH_SHORT).show();
+
+                                        }
+                                    });
+
+                                  }
                     });
 
                 }
@@ -245,7 +281,7 @@ public class HomeActivityNew extends AppCompatActivity
                 progressDialog.setCancelable(true);
 
 
-                Intent intent = new Intent(context, JourneyHistory.class);
+                Intent intent = new Intent(context, JourneyDetails.class);
                 startActivity(intent);
                 progressDialog.dismiss();
             }
@@ -255,10 +291,10 @@ public class HomeActivityNew extends AppCompatActivity
     }
 
 
-    private void showJourneyHistoryDialouge() {
+    private void showJourneyDetailsDialouge() {
         final android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(context);
 
-        View view = LayoutInflater.from(context).inflate(R.layout.activity_edit_journey_histiory, null);
+        View view = LayoutInflater.from(context).inflate(R.layout.activity_edit_journey_details, null);
         builder.setView(view);
         builder.setCancelable(true);
         final  AlertDialog alertDialog = builder.create();
@@ -513,6 +549,8 @@ public class HomeActivityNew extends AppCompatActivity
         trigger.setText("Start Journey");
         trigger.setBackground(getDrawable(R.drawable.round_white));
         triggerState = false;
+
+        progressDialog.dismiss();
     }
 
     /*****************************************************/
@@ -607,7 +645,7 @@ public class HomeActivityNew extends AppCompatActivity
             progressDialog.setCancelable(true);
 
 
-            Intent intent = new Intent(context, JourneyHistory.class);
+            Intent intent = new Intent(context, JourneyDetails.class);
             startActivity(intent);
             progressDialog.dismiss();
 

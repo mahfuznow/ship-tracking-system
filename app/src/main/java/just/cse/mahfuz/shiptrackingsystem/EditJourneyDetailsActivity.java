@@ -29,9 +29,9 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EditJourneyHistioryActivity extends AppCompatActivity {
+public class EditJourneyDetailsActivity extends AppCompatActivity {
 
-    Context context = EditJourneyHistioryActivity.this;
+    Context context = EditJourneyDetailsActivity.this;
     TextView journeyDate;
     EditText destination, deadWeight, draught;
     String sJourneyDate, sDestination, sDeadWeight, sDraught;
@@ -56,10 +56,10 @@ public class EditJourneyHistioryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_journey_histiory);
+        setContentView(R.layout.activity_edit_journey_details);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Edit Journey");
+        getSupportActionBar().setTitle("Edit Journey Details");
 
         journeyDate = findViewById(R.id.journeyDate);
         destination = findViewById(R.id.destination);
@@ -72,7 +72,7 @@ public class EditJourneyHistioryActivity extends AppCompatActivity {
         firebaseFirestore = FirebaseFirestore.getInstance();
         uid = firebaseAuth.getUid();
 
-        progressDialog = new ProgressDialog(EditJourneyHistioryActivity.this);
+        progressDialog = new ProgressDialog(EditJourneyDetailsActivity.this);
 
         loadContents();
 
@@ -191,7 +191,7 @@ public class EditJourneyHistioryActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 Toast.makeText(context, "Journey History Updated successfully", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(context, JourneyHistory.class);
+                Intent intent = new Intent(context, JourneyDetails.class);
                 finish();
                 progressDialog.dismiss();
                 startActivity(intent);

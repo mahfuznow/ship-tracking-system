@@ -94,7 +94,7 @@
                 android:layout_height="@dimen/_40sdp"
                 android:layout_margin="@dimen/_5sdp"
                 android:background="@drawable/round_white"
-                android:text="Journey History"
+                android:text="Journey Details"
                 android:textColor="#000"
                 android:textSize="@dimen/_20ssp"
                 android:fontFamily="@font/regular"

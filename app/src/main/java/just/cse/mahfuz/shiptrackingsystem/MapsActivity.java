@@ -60,7 +60,6 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import just.cse.mahfuz.shiptrackingsystem.Adapter.CustomWindowAdapter;
 import just.cse.mahfuz.shiptrackingsystem.Adapter.ShipListRecyclerAdapter;
 import just.cse.mahfuz.shiptrackingsystem.Class.OnInfoItemTouchListener;
 import just.cse.mahfuz.shiptrackingsystem.Model.Users;
@@ -97,6 +96,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     String markerPlace[];
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private boolean isGPS;
+
+    Marker OpenedMarker = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -296,18 +297,34 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-//        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-//            @Override
-//            public boolean onMarkerClick(Marker marker) {
-//                if (marker.isInfoWindowShown()) {
-//                    marker.hideInfoWindow();
-//                }
-//                else {
-//                    marker.showInfoWindow();
-//                }
-//                return false;
-//            }
-//        });
+        //we have to override the click event to customise according our need
+
+
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+
+                if (OpenedMarker!= null) {
+                    // Close the info window
+                    OpenedMarker.hideInfoWindow();
+                    // Is the marker the same marker that was already open
+                    if (OpenedMarker.equals(marker)) {
+                        // Nullify the lastOpenned object
+                        OpenedMarker = null;
+                        // Return so that the info window isn't openned again
+                        return true;
+                    }
+                }
+                // Open the info window for the marker
+                marker.showInfoWindow();
+                // Re-assign the last openned such that we can close it later
+                OpenedMarker = marker;
+                //*********************
+                    //return true for preventing default behaviour : when click on marker marker
+                    //moves to the center of the screen
+                return true;
+            }
+        });
 //
 
 

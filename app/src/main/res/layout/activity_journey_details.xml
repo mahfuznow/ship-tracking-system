@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,22 +7,22 @@
     android:layout_height="match_parent"
     android:background="@drawable/gradient_background"
     android:orientation="vertical"
-    tools:context=".EditJourneyHistioryActivity"
-    android:gravity="center"
+    tools:context=".JourneyDetails"
+
     >
 
 
-
     <ScrollView
-        android:layout_marginTop="@dimen/_30sdp"
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_30sdp"
         app:layout_constraintBottom_toTopOf="@+id/edit"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        >
+        app:layout_constraintVertical_bias="0.0">
 
 
         <LinearLayout
@@ -34,7 +34,6 @@
             android:layout_marginBottom="8dp"
             android:gravity="center"
             android:orientation="vertical">
-
 
 
             <TextView
@@ -60,8 +59,7 @@
                 android:padding="@dimen/_5sdp"
                 android:textColor="#000"
                 android:textColorHint="@color/gray"
-                android:textSize="@dimen/_16ssp"
-                />
+                android:textSize="@dimen/_16ssp" />
 
 
             <TextView
@@ -76,7 +74,7 @@
                 android:text="Destination"
                 android:textColor="#fff" />
 
-            <EditText
+            <TextView
                 android:id="@+id/destination"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -87,8 +85,7 @@
                 android:padding="@dimen/_5sdp"
                 android:textColor="#000"
                 android:textColorHint="@color/gray"
-                android:textSize="@dimen/_16ssp"
-                />
+                android:textSize="@dimen/_16ssp" />
 
 
             <TextView
@@ -103,7 +100,7 @@
                 android:text="Deadweight"
                 android:textColor="#fff" />
 
-            <EditText
+            <TextView
                 android:id="@+id/deadWeight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -128,7 +125,7 @@
                 android:text="Drought"
                 android:textColor="#fff" />
 
-            <EditText
+            <TextView
                 android:id="@+id/draught"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -152,13 +149,29 @@
 
     </ScrollView>
 
+    <Button
+        android:id="@+id/history"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/round_white"
+        android:backgroundTint="@color/colorAccent"
+        android:text="See history"
+        app:layout_constraintBottom_toTopOf="@+id/edit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
+
     <LinearLayout
-        android:id="@+id/done"
+        android:id="@+id/edit"
         android:layout_width="@dimen/_45sdp"
         android:layout_height="@dimen/_45sdp"
-        android:layout_marginTop="@dimen/_15sdp"
-        android:layout_marginEnd="@dimen/_8sdp"
-        android:layout_marginBottom="@dimen/_8sdp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="32dp"
         android:background="@drawable/round_white"
         android:backgroundTint="@color/yellow"
         android:drawablePadding="@dimen/_10sdp"
@@ -169,148 +182,15 @@
         android:textSize="@dimen/_18ssp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/history">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/done" />
+            android:background="@drawable/edit" />
 
     </LinearLayout>
 
 
-</LinearLayout>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--<?xml version="1.0" encoding="utf-8"?>-->
-<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--    xmlns:tools="http://schemas.android.com/tools"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent"-->
-<!--    tools:context=".EditJourneyHistioryActivity"-->
-<!--    android:background="@color/colorPrimary"-->
-<!--    android:layout_gravity="center"-->
-<!--    android:gravity="center"-->
-<!--    android:orientation="vertical"-->
-<!--    >-->
-
-
-<!--    <LinearLayout-->
-<!--        android:id="@+id/linearLayout3"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_margin="@dimen/_8sdp"-->
-<!--        android:layout_marginStart="8dp"-->
-<!--        android:layout_marginEnd="8dp"-->
-<!--        android:gravity="center"-->
-<!--        android:orientation="vertical"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.0"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        tools:layout_editor_absoluteY="234dp"-->
-<!--        android:layout_gravity="center"-->
-<!--        >-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/journeyDate"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_margin="@dimen/_8sdp"-->
-<!--            android:background="@drawable/outereround"-->
-<!--            android:fontFamily="@font/regular"-->
-<!--            android:gravity="center"-->
-<!--            android:padding="@dimen/_8sdp"-->
-<!--            android:text="Journey Date"-->
-<!--            android:textColor="#ffff"-->
-<!--            android:textColorHint="#DFDFDF"-->
-<!--            android:textSize="@dimen/_16sdp" />-->
-
-<!--        <EditText-->
-<!--            android:id="@+id/destination"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_margin="@dimen/_8sdp"-->
-<!--            android:background="@drawable/outereround"-->
-<!--            android:fontFamily="@font/regular"-->
-<!--            android:gravity="center"-->
-<!--            android:hint="Destination"-->
-<!--            android:padding="@dimen/_8sdp"-->
-<!--            android:textColor="#ffff"-->
-<!--            android:textColorHint="#DFDFDF"-->
-<!--            android:textSize="@dimen/_16sdp" />-->
-
-<!--        <EditText-->
-<!--            android:id="@+id/deadWeight"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_margin="@dimen/_8sdp"-->
-<!--            android:background="@drawable/outereround"-->
-<!--            android:fontFamily="@font/regular"-->
-<!--            android:gravity="center"-->
-<!--            android:hint="Dead Weight"-->
-<!--            android:padding="@dimen/_8sdp"-->
-<!--            android:textColor="#ffff"-->
-<!--            android:textColorHint="#DFDFDF"-->
-<!--            android:textSize="@dimen/_16sdp"/>-->
-
-<!--        <EditText-->
-<!--            android:id="@+id/draught"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_margin="@dimen/_8sdp"-->
-<!--            android:background="@drawable/outereround"-->
-<!--            android:fontFamily="@font/regular"-->
-<!--            android:gravity="center"-->
-<!--            android:hint="Draught"-->
-<!--            android:padding="@dimen/_8sdp"-->
-<!--            android:textColor="#ffff"-->
-<!--            android:textColorHint="#DFDFDF"-->
-<!--            android:textSize="@dimen/_16sdp"/>-->
-
-<!--    </LinearLayout>-->
-
-<!--    <LinearLayout-->
-<!--        android:id="@+id/done"-->
-<!--        android:layout_width="@dimen/_45sdp"-->
-<!--        android:layout_height="@dimen/_45sdp"-->
-<!--        android:layout_marginTop="@dimen/_15sdp"-->
-<!--        android:layout_marginEnd="@dimen/_8sdp"-->
-<!--        android:layout_marginBottom="@dimen/_8sdp"-->
-<!--        android:background="@drawable/round_white"-->
-<!--        android:backgroundTint="@color/yellow"-->
-<!--        android:drawablePadding="@dimen/_10sdp"-->
-<!--        android:gravity="center"-->
-<!--        android:padding="@dimen/_5sdp"-->
-<!--        android:textColor="#ffff"-->
-<!--        android:textColorHint="@color/colorPrimary"-->
-<!--        android:textSize="@dimen/_18ssp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent">-->
-
-<!--        <ImageView-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:background="@drawable/done" />-->
-
-<!--    </LinearLayout>-->
-
-<!--</LinearLayout>-->
+</androidx.constraintlayout.widget.ConstraintLayout>

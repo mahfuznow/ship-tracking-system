@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
+    android:orientation="vertical"
+    tools:context=".EditJourneyDetailsActivity"
+    android:gravity="center"
+    >
+
+
+
+    <ScrollView
+        android:layout_marginTop="@dimen/_30sdp"
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/edit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_50sdp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="@dimen/_50sdp"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/half_semi_round"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:fontFamily="@font/reem"
+                android:gravity="center"
+                android:padding="2dp"
+                android:text="Journey Date"
+                android:textColor="#fff" />
+
+            <TextView
+                android:id="@+id/journeyDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/half_lower_semi_round"
+                android:drawablePadding="@dimen/_10sdp"
+                android:fontFamily="@font/reem"
+                android:gravity="center"
+                android:padding="@dimen/_5sdp"
+                android:textColor="#000"
+                android:textColorHint="@color/gray"
+                android:textSize="@dimen/_16ssp"
+                />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/half_semi_round"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:fontFamily="@font/reem"
+                android:gravity="center"
+                android:padding="2dp"
+                android:text="Destination"
+                android:textColor="#fff" />
+
+            <EditText
+                android:id="@+id/destination"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/half_lower_semi_round"
+                android:drawablePadding="@dimen/_10sdp"
+                android:fontFamily="@font/reem"
+                android:gravity="center"
+                android:padding="@dimen/_5sdp"
+                android:textColor="#000"
+                android:textColorHint="@color/gray"
+                android:textSize="@dimen/_16ssp"
+                />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/half_semi_round"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:fontFamily="@font/reem"
+                android:gravity="center"
+                android:padding="2dp"
+                android:text="Deadweight"
+                android:textColor="#fff" />
+
+            <EditText
+                android:id="@+id/deadWeight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/half_lower_semi_round"
+                android:drawablePadding="@dimen/_10sdp"
+                android:fontFamily="@font/reem"
+                android:gravity="center"
+                android:padding="@dimen/_5sdp"
+                android:textColor="#000"
+                android:textColorHint="@color/gray"
+                android:textSize="@dimen/_16ssp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/half_semi_round"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:fontFamily="@font/reem"
+                android:gravity="center"
+                android:padding="2dp"
+                android:text="Drought"
+                android:textColor="#fff" />
+
+            <EditText
+                android:id="@+id/draught"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/half_lower_semi_round"
+                android:drawablePadding="@dimen/_10sdp"
+                android:fontFamily="@font/reem"
+                android:gravity="center"
+                android:padding="@dimen/_5sdp"
+                android:textColor="#000"
+                android:textColorHint="@color/gray"
+                android:textSize="@dimen/_16ssp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_60sdp">
+
+            </View>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/done"
+        android:layout_width="@dimen/_45sdp"
+        android:layout_height="@dimen/_45sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:background="@drawable/round_white"
+        android:backgroundTint="@color/yellow"
+        android:drawablePadding="@dimen/_10sdp"
+        android:gravity="center"
+        android:padding="@dimen/_5sdp"
+        android:textColor="#ffff"
+        android:textColorHint="@color/colorPrimary"
+        android:textSize="@dimen/_18ssp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/done" />
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    tools:context=".EditJourneyDetailsActivity"-->
+<!--    android:background="@color/colorPrimary"-->
+<!--    android:layout_gravity="center"-->
+<!--    android:gravity="center"-->
+<!--    android:orientation="vertical"-->
+<!--    >-->
+
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/linearLayout3"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_margin="@dimen/_8sdp"-->
+<!--        android:layout_marginStart="8dp"-->
+<!--        android:layout_marginEnd="8dp"-->
+<!--        android:gravity="center"-->
+<!--        android:orientation="vertical"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        tools:layout_editor_absoluteY="234dp"-->
+<!--        android:layout_gravity="center"-->
+<!--        >-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/journeyDate"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_margin="@dimen/_8sdp"-->
+<!--            android:background="@drawable/outereround"-->
+<!--            android:fontFamily="@font/regular"-->
+<!--            android:gravity="center"-->
+<!--            android:padding="@dimen/_8sdp"-->
+<!--            android:text="Journey Date"-->
+<!--            android:textColor="#ffff"-->
+<!--            android:textColorHint="#DFDFDF"-->
+<!--            android:textSize="@dimen/_16sdp" />-->
+
+<!--        <EditText-->
+<!--            android:id="@+id/destination"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_margin="@dimen/_8sdp"-->
+<!--            android:background="@drawable/outereround"-->
+<!--            android:fontFamily="@font/regular"-->
+<!--            android:gravity="center"-->
+<!--            android:hint="Destination"-->
+<!--            android:padding="@dimen/_8sdp"-->
+<!--            android:textColor="#ffff"-->
+<!--            android:textColorHint="#DFDFDF"-->
+<!--            android:textSize="@dimen/_16sdp" />-->
+
+<!--        <EditText-->
+<!--            android:id="@+id/deadWeight"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_margin="@dimen/_8sdp"-->
+<!--            android:background="@drawable/outereround"-->
+<!--            android:fontFamily="@font/regular"-->
+<!--            android:gravity="center"-->
+<!--            android:hint="Dead Weight"-->
+<!--            android:padding="@dimen/_8sdp"-->
+<!--            android:textColor="#ffff"-->
+<!--            android:textColorHint="#DFDFDF"-->
+<!--            android:textSize="@dimen/_16sdp"/>-->
+
+<!--        <EditText-->
+<!--            android:id="@+id/draught"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_margin="@dimen/_8sdp"-->
+<!--            android:background="@drawable/outereround"-->
+<!--            android:fontFamily="@font/regular"-->
+<!--            android:gravity="center"-->
+<!--            android:hint="Draught"-->
+<!--            android:padding="@dimen/_8sdp"-->
+<!--            android:textColor="#ffff"-->
+<!--            android:textColorHint="#DFDFDF"-->
+<!--            android:textSize="@dimen/_16sdp"/>-->
+
+<!--    </LinearLayout>-->
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/done"-->
+<!--        android:layout_width="@dimen/_45sdp"-->
+<!--        android:layout_height="@dimen/_45sdp"-->
+<!--        android:layout_marginTop="@dimen/_15sdp"-->
+<!--        android:layout_marginEnd="@dimen/_8sdp"-->
+<!--        android:layout_marginBottom="@dimen/_8sdp"-->
+<!--        android:background="@drawable/round_white"-->
+<!--        android:backgroundTint="@color/yellow"-->
+<!--        android:drawablePadding="@dimen/_10sdp"-->
+<!--        android:gravity="center"-->
+<!--        android:padding="@dimen/_5sdp"-->
+<!--        android:textColor="#ffff"-->
+<!--        android:textColorHint="@color/colorPrimary"-->
+<!--        android:textSize="@dimen/_18ssp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent">-->
+
+<!--        <ImageView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:background="@drawable/done" />-->
+
+<!--    </LinearLayout>-->
+
+<!--</LinearLayout>-->

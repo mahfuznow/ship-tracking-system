@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     android:id="@+id/constraintLayout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -11,45 +11,57 @@
     android:orientation="horizontal"
     android:padding="@dimen/_5sdp"
     android:layout_margin="@dimen/_5sdp"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+    android:theme="@style/ThemeOverlay.AppCompat.Dark"
+    android:weightSum="10"
+    >
 
-    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/image"
-        android:layout_width="@dimen/_50sdp"
-        android:layout_height="@dimen/_50sdp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:src="@drawable/person_lg"
-        app:civ_border_color="#00000000"
-        app:civ_border_width="@dimen/_2sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="3"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        >
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/image"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:src="@drawable/ship"
+            app:civ_border_color="#00000000"
+            app:civ_border_width="@dimen/_2sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="7"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/call"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/image"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+
+        >
 
         <TextView
-            android:id="@+id/shipID"
+            android:id="@+id/startDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ship"
             android:drawablePadding="@dimen/_8sdp"
             android:fontFamily="@font/reem"
-            android:text="Ship ID"
+            android:text="Start Date"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="#fff"
             android:textSize="@dimen/_11ssp"
@@ -57,14 +69,14 @@
             />
 
         <TextView
-            android:id="@+id/shipName"
+            android:id="@+id/endDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ship"
             android:drawablePadding="@dimen/_8sdp"
             android:fontFamily="@font/reem"
-            android:text="Ship Name"
-            android:textAllCaps="true"
+            android:text="End date"
+            android:textAllCaps="false"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="#fff"
             android:textSize="@dimen/_11ssp"
@@ -72,13 +84,13 @@
             />
 
         <TextView
-            android:id="@+id/ownerName"
+            android:id="@+id/destination"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/person"
+            android:drawableLeft="@drawable/ship"
             android:drawablePadding="@dimen/_8sdp"
             android:fontFamily="@font/reem"
-            android:text="Owner Name"
+            android:text="Destination"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="#fff"
             android:textSize="@dimen/_11ssp"
@@ -86,40 +98,28 @@
             />
 
         <TextView
-            android:id="@+id/ownerEmail"
+            android:id="@+id/deadWeight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/email"
+            android:drawableLeft="@drawable/ship"
             android:drawablePadding="@dimen/_8sdp"
             android:fontFamily="@font/reem"
-            android:text="contact@email.com"
+            android:text="Dead Weight"
             android:textColor="#fff"
             android:textSize="@dimen/_11ssp" />
 
         <TextView
-            android:id="@+id/ownerPhone"
+            android:id="@+id/draught"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/call"
+            android:drawableLeft="@drawable/ship"
             android:drawablePadding="@dimen/_8sdp"
             android:fontFamily="@font/reem"
-            android:text="+880170000001"
+            android:text="Draught"
             android:textColor="#fff"
             android:textSize="@dimen/_11ssp" />
 
     </LinearLayout>
 
 
-    <Button
-        android:id="@+id/call"
-        android:layout_width="@dimen/_30sdp"
-        android:layout_height="@dimen/_30sdp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/call"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
